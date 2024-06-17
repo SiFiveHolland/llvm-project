@@ -68,7 +68,7 @@ declare void @llvm.hwasan.check.memaccess(ptr, ptr, i32)
 ; CHECK-NEXT: .hidden __hwasan_check_x10_1
 ; CHECK-NEXT: __hwasan_check_x10_1:
 ; CHECK-NEXT: slli    t1, a0, 7
-; CHECK-NEXT: srli    t1, t1, 11
+; CHECK-NEXT: srai    t1, t1, 11
 ; CHECK-NEXT: add     t1, t0, t1
 ; CHECK-NEXT: lbu     t1, 0(t1)
 ; CHECK-NEXT: srli    t2, a0, 57
@@ -90,7 +90,7 @@ declare void @llvm.hwasan.check.memaccess(ptr, ptr, i32)
 ; COMPRESS-NEXT: .hidden __hwasan_check_x10_1
 ; COMPRESS-NEXT: __hwasan_check_x10_1:
 ; COMPRESS-NEXT: slli    t1, a0, 7
-; COMPRESS-NEXT: srli    t1, t1, 11
+; COMPRESS-NEXT: srai    t1, t1, 11
 ; COMPRESS-NEXT: c.add   t1, t0
 ; COMPRESS-NEXT: lbu     t1, 0(t1)
 ; COMPRESS-NEXT: srli    t2, a0, 57
@@ -114,7 +114,7 @@ declare void @llvm.hwasan.check.memaccess.shortgranules(ptr, ptr, i32)
 ; CHECK-NEXT: .hidden __hwasan_check_x10_2_short
 ; CHECK-NEXT: __hwasan_check_x10_2_short:
 ; CHECK-NEXT: slli    t1, a0, 7
-; CHECK-NEXT: srli    t1, t1, 11
+; CHECK-NEXT: srai    t1, t1, 11
 ; CHECK-NEXT: add     t1, t0, t1
 ; CHECK-NEXT: lbu     t1, 0(t1)
 ; CHECK-NEXT: srli    t2, a0, 57
@@ -145,7 +145,7 @@ declare void @llvm.hwasan.check.memaccess.shortgranules(ptr, ptr, i32)
 ; COMPRESS-NEXT: .hidden __hwasan_check_x10_2_short
 ; COMPRESS-NEXT: __hwasan_check_x10_2_short:
 ; COMPRESS-NEXT: slli    t1, a0, 7
-; COMPRESS-NEXT: srli    t1, t1, 11
+; COMPRESS-NEXT: srai    t1, t1, 11
 ; COMPRESS-NEXT: c.add   t1, t0
 ; COMPRESS-NEXT: lbu     t1, 0(t1)
 ; COMPRESS-NEXT: srli    t2, a0, 57

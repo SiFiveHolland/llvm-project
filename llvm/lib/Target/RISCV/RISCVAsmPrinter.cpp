@@ -681,7 +681,7 @@ void RISCVAsmPrinter::EmitHwasanMemaccessSymbols(Module &M) {
         MCInstBuilder(RISCV::SLLI).addReg(RISCV::X6).addReg(Reg).addImm(7),
         MCSTI);
     EmitToStreamer(*OutStreamer,
-                   MCInstBuilder(RISCV::SRLI)
+                   MCInstBuilder(RISCV::SRAI)
                        .addReg(RISCV::X6)
                        .addReg(RISCV::X6)
                        .addImm(11),
