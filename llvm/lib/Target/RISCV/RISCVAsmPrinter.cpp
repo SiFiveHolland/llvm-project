@@ -659,6 +659,10 @@ void RISCVAsmPrinter::EmitHwasanMemaccessSymbols(Module &M) {
     uint32_t AccessInfo = std::get<2>(P.first);
     MCSymbol *Sym = P.second;
 
+    bool HasMatchAllTag =
+        (AccessInfo >> HWASanAccessInfo::HasMatchAllShift) & 1;
+    uint8_t MatchAllTag =
+        (AccessInfo >> HWASanAccessInfo::MatchAllShift) & 0xff;
     unsigned Size =
         1 << ((AccessInfo >> HWASanAccessInfo::AccessSizeShift) & 0xf);
     OutStreamer->switchSection(OutContext.getELFSection(
@@ -716,6 +720,22 @@ void RISCVAsmPrinter::EmitHwasanMemaccessSymbols(Module &M) {
                        .addImm(0),
                    MCSTI);
     OutStreamer->emitLabel(HandleMismatchOrPartialSym);
+
+    if (HasMatchAllTag) {
+      EmitToStreamer(*OutStreamer,
+                     MCInstBuilder(RISCV::ADDI)
+                         .addReg(RISCV::X28)
+                         .addReg(RISCV::X0)
+                         .addImm(MatchAllTag),
+                     MCSTI);
+      EmitToStreamer(
+          *OutStreamer,
+          MCInstBuilder(RISCV::BEQ)
+              .addReg(RISCV::X7)
+              .addReg(RISCV::X28)
+              .addExpr(MCSymbolRefExpr::create(ReturnSym, OutContext)),
+          MCSTI);
+    }
 
     if (IsShort) {
       EmitToStreamer(*OutStreamer,
