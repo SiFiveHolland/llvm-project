@@ -18,16 +18,16 @@ define i8 @test_load8(ptr %a) sanitize_hwaddress {
 ; CHECK-SAME: (ptr [[A:%.*]]) #[[ATTR0:[0-9]+]] {
 ; CHECK-NEXT:  entry:
 ; CHECK-NEXT:    [[TMP0:%.*]] = load i64, ptr @__hwasan_tls, align 8
-; CHECK-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 8
-; CHECK-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 8
+; CHECK-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 7
+; CHECK-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 7
 ; CHECK-NEXT:    [[TMP3:%.*]] = or i64 [[TMP2]], 4294967295
 ; CHECK-NEXT:    [[HWASAN_SHADOW:%.*]] = add i64 [[TMP3]], 1
 ; CHECK-NEXT:    [[TMP4:%.*]] = inttoptr i64 [[HWASAN_SHADOW]] to ptr
 ; CHECK-NEXT:    [[TMP5:%.*]] = ptrtoint ptr [[A]] to i64
-; CHECK-NEXT:    [[TMP6:%.*]] = lshr i64 [[TMP5]], 56
+; CHECK-NEXT:    [[TMP6:%.*]] = lshr i64 [[TMP5]], 57
 ; CHECK-NEXT:    [[TMP7:%.*]] = trunc i64 [[TMP6]] to i8
-; CHECK-NEXT:    [[TMP8:%.*]] = shl i64 [[TMP5]], 8
-; CHECK-NEXT:    [[TMP9:%.*]] = ashr i64 [[TMP8]], 8
+; CHECK-NEXT:    [[TMP8:%.*]] = shl i64 [[TMP5]], 7
+; CHECK-NEXT:    [[TMP9:%.*]] = ashr i64 [[TMP8]], 7
 ; CHECK-NEXT:    [[TMP10:%.*]] = ashr i64 [[TMP9]], 4
 ; CHECK-NEXT:    [[TMP11:%.*]] = getelementptr i8, ptr [[TMP4]], i64 [[TMP10]]
 ; CHECK-NEXT:    [[TMP12:%.*]] = load i8, ptr [[TMP11]], align 1
@@ -44,8 +44,8 @@ define i8 @test_load8(ptr %a) sanitize_hwaddress {
 ; NOFASTPATH-SAME: (ptr [[A:%.*]]) #[[ATTR0:[0-9]+]] {
 ; NOFASTPATH-NEXT:  entry:
 ; NOFASTPATH-NEXT:    [[TMP0:%.*]] = load i64, ptr @__hwasan_tls, align 8
-; NOFASTPATH-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 8
-; NOFASTPATH-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 8
+; NOFASTPATH-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 7
+; NOFASTPATH-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 7
 ; NOFASTPATH-NEXT:    [[TMP3:%.*]] = or i64 [[TMP2]], 4294967295
 ; NOFASTPATH-NEXT:    [[HWASAN_SHADOW:%.*]] = add i64 [[TMP3]], 1
 ; NOFASTPATH-NEXT:    [[TMP4:%.*]] = inttoptr i64 [[HWASAN_SHADOW]] to ptr
@@ -57,16 +57,16 @@ define i8 @test_load8(ptr %a) sanitize_hwaddress {
 ; FASTPATH-SAME: (ptr [[A:%.*]]) #[[ATTR0:[0-9]+]] {
 ; FASTPATH-NEXT:  entry:
 ; FASTPATH-NEXT:    [[TMP0:%.*]] = load i64, ptr @__hwasan_tls, align 8
-; FASTPATH-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 8
-; FASTPATH-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 8
+; FASTPATH-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 7
+; FASTPATH-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 7
 ; FASTPATH-NEXT:    [[TMP3:%.*]] = or i64 [[TMP2]], 4294967295
 ; FASTPATH-NEXT:    [[HWASAN_SHADOW:%.*]] = add i64 [[TMP3]], 1
 ; FASTPATH-NEXT:    [[TMP4:%.*]] = inttoptr i64 [[HWASAN_SHADOW]] to ptr
 ; FASTPATH-NEXT:    [[TMP5:%.*]] = ptrtoint ptr [[A]] to i64
-; FASTPATH-NEXT:    [[TMP6:%.*]] = lshr i64 [[TMP5]], 56
+; FASTPATH-NEXT:    [[TMP6:%.*]] = lshr i64 [[TMP5]], 57
 ; FASTPATH-NEXT:    [[TMP7:%.*]] = trunc i64 [[TMP6]] to i8
-; FASTPATH-NEXT:    [[TMP8:%.*]] = shl i64 [[TMP5]], 8
-; FASTPATH-NEXT:    [[TMP9:%.*]] = ashr i64 [[TMP8]], 8
+; FASTPATH-NEXT:    [[TMP8:%.*]] = shl i64 [[TMP5]], 7
+; FASTPATH-NEXT:    [[TMP9:%.*]] = ashr i64 [[TMP8]], 7
 ; FASTPATH-NEXT:    [[TMP10:%.*]] = ashr i64 [[TMP9]], 4
 ; FASTPATH-NEXT:    [[TMP11:%.*]] = getelementptr i8, ptr [[TMP4]], i64 [[TMP10]]
 ; FASTPATH-NEXT:    [[TMP12:%.*]] = load i8, ptr [[TMP11]], align 1
@@ -84,10 +84,10 @@ define i8 @test_load8(ptr %a) sanitize_hwaddress {
 ; ABORT-DYNAMIC-SHADOW-NEXT:  entry:
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[DOTHWASAN_SHADOW:%.*]] = call ptr asm "", "=r,0"(ptr @__hwasan_shadow)
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP0:%.*]] = ptrtoint ptr [[A]] to i64
-; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 56
+; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 57
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP2:%.*]] = trunc i64 [[TMP1]] to i8
-; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 8
-; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 8
+; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 7
+; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 7
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP5:%.*]] = ashr i64 [[TMP4]], 4
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP6:%.*]] = getelementptr i8, ptr [[DOTHWASAN_SHADOW]], i64 [[TMP5]]
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP7:%.*]] = load i8, ptr [[TMP6]], align 1
@@ -105,10 +105,10 @@ define i8 @test_load8(ptr %a) sanitize_hwaddress {
 ; RECOVER-DYNAMIC-SHADOW-NEXT:  entry:
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[DOTHWASAN_SHADOW:%.*]] = call ptr asm "", "=r,0"(ptr @__hwasan_shadow)
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP0:%.*]] = ptrtoint ptr [[A]] to i64
-; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 56
+; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 57
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP2:%.*]] = trunc i64 [[TMP1]] to i8
-; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 8
-; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 8
+; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 7
+; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 7
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP5:%.*]] = ashr i64 [[TMP4]], 4
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP6:%.*]] = getelementptr i8, ptr [[DOTHWASAN_SHADOW]], i64 [[TMP5]]
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP7:%.*]] = load i8, ptr [[TMP6]], align 1
@@ -143,10 +143,10 @@ define i8 @test_load8(ptr %a) sanitize_hwaddress {
 ; ABORT-ZERO-BASED-SHADOW-NEXT:  entry:
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[DOTHWASAN_SHADOW:%.*]] = call ptr asm "", "=r,0"(ptr null)
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP0:%.*]] = ptrtoint ptr [[A]] to i64
-; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 56
+; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 57
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP2:%.*]] = trunc i64 [[TMP1]] to i8
-; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 8
-; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 8
+; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 7
+; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 7
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP5:%.*]] = ashr i64 [[TMP4]], 4
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP6:%.*]] = inttoptr i64 [[TMP5]] to ptr
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP7:%.*]] = load i8, ptr [[TMP6]], align 1
@@ -164,10 +164,10 @@ define i8 @test_load8(ptr %a) sanitize_hwaddress {
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:  entry:
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[DOTHWASAN_SHADOW:%.*]] = call ptr asm "", "=r,0"(ptr null)
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP0:%.*]] = ptrtoint ptr [[A]] to i64
-; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 56
+; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 57
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP2:%.*]] = trunc i64 [[TMP1]] to i8
-; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 8
-; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 8
+; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 7
+; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 7
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP5:%.*]] = ashr i64 [[TMP4]], 4
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP6:%.*]] = inttoptr i64 [[TMP5]] to ptr
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP7:%.*]] = load i8, ptr [[TMP6]], align 1
@@ -207,16 +207,16 @@ define i16 @test_load16(ptr %a) sanitize_hwaddress {
 ; CHECK-SAME: (ptr [[A:%.*]]) #[[ATTR0]] {
 ; CHECK-NEXT:  entry:
 ; CHECK-NEXT:    [[TMP0:%.*]] = load i64, ptr @__hwasan_tls, align 8
-; CHECK-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 8
-; CHECK-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 8
+; CHECK-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 7
+; CHECK-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 7
 ; CHECK-NEXT:    [[TMP3:%.*]] = or i64 [[TMP2]], 4294967295
 ; CHECK-NEXT:    [[HWASAN_SHADOW:%.*]] = add i64 [[TMP3]], 1
 ; CHECK-NEXT:    [[TMP4:%.*]] = inttoptr i64 [[HWASAN_SHADOW]] to ptr
 ; CHECK-NEXT:    [[TMP5:%.*]] = ptrtoint ptr [[A]] to i64
-; CHECK-NEXT:    [[TMP6:%.*]] = lshr i64 [[TMP5]], 56
+; CHECK-NEXT:    [[TMP6:%.*]] = lshr i64 [[TMP5]], 57
 ; CHECK-NEXT:    [[TMP7:%.*]] = trunc i64 [[TMP6]] to i8
-; CHECK-NEXT:    [[TMP8:%.*]] = shl i64 [[TMP5]], 8
-; CHECK-NEXT:    [[TMP9:%.*]] = ashr i64 [[TMP8]], 8
+; CHECK-NEXT:    [[TMP8:%.*]] = shl i64 [[TMP5]], 7
+; CHECK-NEXT:    [[TMP9:%.*]] = ashr i64 [[TMP8]], 7
 ; CHECK-NEXT:    [[TMP10:%.*]] = ashr i64 [[TMP9]], 4
 ; CHECK-NEXT:    [[TMP11:%.*]] = getelementptr i8, ptr [[TMP4]], i64 [[TMP10]]
 ; CHECK-NEXT:    [[TMP12:%.*]] = load i8, ptr [[TMP11]], align 1
@@ -233,8 +233,8 @@ define i16 @test_load16(ptr %a) sanitize_hwaddress {
 ; NOFASTPATH-SAME: (ptr [[A:%.*]]) #[[ATTR0]] {
 ; NOFASTPATH-NEXT:  entry:
 ; NOFASTPATH-NEXT:    [[TMP0:%.*]] = load i64, ptr @__hwasan_tls, align 8
-; NOFASTPATH-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 8
-; NOFASTPATH-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 8
+; NOFASTPATH-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 7
+; NOFASTPATH-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 7
 ; NOFASTPATH-NEXT:    [[TMP3:%.*]] = or i64 [[TMP2]], 4294967295
 ; NOFASTPATH-NEXT:    [[HWASAN_SHADOW:%.*]] = add i64 [[TMP3]], 1
 ; NOFASTPATH-NEXT:    [[TMP4:%.*]] = inttoptr i64 [[HWASAN_SHADOW]] to ptr
@@ -246,16 +246,16 @@ define i16 @test_load16(ptr %a) sanitize_hwaddress {
 ; FASTPATH-SAME: (ptr [[A:%.*]]) #[[ATTR0]] {
 ; FASTPATH-NEXT:  entry:
 ; FASTPATH-NEXT:    [[TMP0:%.*]] = load i64, ptr @__hwasan_tls, align 8
-; FASTPATH-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 8
-; FASTPATH-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 8
+; FASTPATH-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 7
+; FASTPATH-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 7
 ; FASTPATH-NEXT:    [[TMP3:%.*]] = or i64 [[TMP2]], 4294967295
 ; FASTPATH-NEXT:    [[HWASAN_SHADOW:%.*]] = add i64 [[TMP3]], 1
 ; FASTPATH-NEXT:    [[TMP4:%.*]] = inttoptr i64 [[HWASAN_SHADOW]] to ptr
 ; FASTPATH-NEXT:    [[TMP5:%.*]] = ptrtoint ptr [[A]] to i64
-; FASTPATH-NEXT:    [[TMP6:%.*]] = lshr i64 [[TMP5]], 56
+; FASTPATH-NEXT:    [[TMP6:%.*]] = lshr i64 [[TMP5]], 57
 ; FASTPATH-NEXT:    [[TMP7:%.*]] = trunc i64 [[TMP6]] to i8
-; FASTPATH-NEXT:    [[TMP8:%.*]] = shl i64 [[TMP5]], 8
-; FASTPATH-NEXT:    [[TMP9:%.*]] = ashr i64 [[TMP8]], 8
+; FASTPATH-NEXT:    [[TMP8:%.*]] = shl i64 [[TMP5]], 7
+; FASTPATH-NEXT:    [[TMP9:%.*]] = ashr i64 [[TMP8]], 7
 ; FASTPATH-NEXT:    [[TMP10:%.*]] = ashr i64 [[TMP9]], 4
 ; FASTPATH-NEXT:    [[TMP11:%.*]] = getelementptr i8, ptr [[TMP4]], i64 [[TMP10]]
 ; FASTPATH-NEXT:    [[TMP12:%.*]] = load i8, ptr [[TMP11]], align 1
@@ -273,10 +273,10 @@ define i16 @test_load16(ptr %a) sanitize_hwaddress {
 ; ABORT-DYNAMIC-SHADOW-NEXT:  entry:
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[DOTHWASAN_SHADOW:%.*]] = call ptr asm "", "=r,0"(ptr @__hwasan_shadow)
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP0:%.*]] = ptrtoint ptr [[A]] to i64
-; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 56
+; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 57
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP2:%.*]] = trunc i64 [[TMP1]] to i8
-; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 8
-; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 8
+; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 7
+; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 7
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP5:%.*]] = ashr i64 [[TMP4]], 4
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP6:%.*]] = getelementptr i8, ptr [[DOTHWASAN_SHADOW]], i64 [[TMP5]]
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP7:%.*]] = load i8, ptr [[TMP6]], align 1
@@ -294,10 +294,10 @@ define i16 @test_load16(ptr %a) sanitize_hwaddress {
 ; RECOVER-DYNAMIC-SHADOW-NEXT:  entry:
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[DOTHWASAN_SHADOW:%.*]] = call ptr asm "", "=r,0"(ptr @__hwasan_shadow)
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP0:%.*]] = ptrtoint ptr [[A]] to i64
-; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 56
+; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 57
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP2:%.*]] = trunc i64 [[TMP1]] to i8
-; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 8
-; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 8
+; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 7
+; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 7
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP5:%.*]] = ashr i64 [[TMP4]], 4
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP6:%.*]] = getelementptr i8, ptr [[DOTHWASAN_SHADOW]], i64 [[TMP5]]
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP7:%.*]] = load i8, ptr [[TMP6]], align 1
@@ -332,10 +332,10 @@ define i16 @test_load16(ptr %a) sanitize_hwaddress {
 ; ABORT-ZERO-BASED-SHADOW-NEXT:  entry:
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[DOTHWASAN_SHADOW:%.*]] = call ptr asm "", "=r,0"(ptr null)
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP0:%.*]] = ptrtoint ptr [[A]] to i64
-; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 56
+; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 57
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP2:%.*]] = trunc i64 [[TMP1]] to i8
-; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 8
-; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 8
+; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 7
+; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 7
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP5:%.*]] = ashr i64 [[TMP4]], 4
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP6:%.*]] = inttoptr i64 [[TMP5]] to ptr
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP7:%.*]] = load i8, ptr [[TMP6]], align 1
@@ -353,10 +353,10 @@ define i16 @test_load16(ptr %a) sanitize_hwaddress {
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:  entry:
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[DOTHWASAN_SHADOW:%.*]] = call ptr asm "", "=r,0"(ptr null)
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP0:%.*]] = ptrtoint ptr [[A]] to i64
-; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 56
+; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 57
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP2:%.*]] = trunc i64 [[TMP1]] to i8
-; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 8
-; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 8
+; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 7
+; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 7
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP5:%.*]] = ashr i64 [[TMP4]], 4
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP6:%.*]] = inttoptr i64 [[TMP5]] to ptr
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP7:%.*]] = load i8, ptr [[TMP6]], align 1
@@ -396,16 +396,16 @@ define i32 @test_load32(ptr %a) sanitize_hwaddress {
 ; CHECK-SAME: (ptr [[A:%.*]]) #[[ATTR0]] {
 ; CHECK-NEXT:  entry:
 ; CHECK-NEXT:    [[TMP0:%.*]] = load i64, ptr @__hwasan_tls, align 8
-; CHECK-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 8
-; CHECK-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 8
+; CHECK-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 7
+; CHECK-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 7
 ; CHECK-NEXT:    [[TMP3:%.*]] = or i64 [[TMP2]], 4294967295
 ; CHECK-NEXT:    [[HWASAN_SHADOW:%.*]] = add i64 [[TMP3]], 1
 ; CHECK-NEXT:    [[TMP4:%.*]] = inttoptr i64 [[HWASAN_SHADOW]] to ptr
 ; CHECK-NEXT:    [[TMP5:%.*]] = ptrtoint ptr [[A]] to i64
-; CHECK-NEXT:    [[TMP6:%.*]] = lshr i64 [[TMP5]], 56
+; CHECK-NEXT:    [[TMP6:%.*]] = lshr i64 [[TMP5]], 57
 ; CHECK-NEXT:    [[TMP7:%.*]] = trunc i64 [[TMP6]] to i8
-; CHECK-NEXT:    [[TMP8:%.*]] = shl i64 [[TMP5]], 8
-; CHECK-NEXT:    [[TMP9:%.*]] = ashr i64 [[TMP8]], 8
+; CHECK-NEXT:    [[TMP8:%.*]] = shl i64 [[TMP5]], 7
+; CHECK-NEXT:    [[TMP9:%.*]] = ashr i64 [[TMP8]], 7
 ; CHECK-NEXT:    [[TMP10:%.*]] = ashr i64 [[TMP9]], 4
 ; CHECK-NEXT:    [[TMP11:%.*]] = getelementptr i8, ptr [[TMP4]], i64 [[TMP10]]
 ; CHECK-NEXT:    [[TMP12:%.*]] = load i8, ptr [[TMP11]], align 1
@@ -422,8 +422,8 @@ define i32 @test_load32(ptr %a) sanitize_hwaddress {
 ; NOFASTPATH-SAME: (ptr [[A:%.*]]) #[[ATTR0]] {
 ; NOFASTPATH-NEXT:  entry:
 ; NOFASTPATH-NEXT:    [[TMP0:%.*]] = load i64, ptr @__hwasan_tls, align 8
-; NOFASTPATH-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 8
-; NOFASTPATH-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 8
+; NOFASTPATH-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 7
+; NOFASTPATH-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 7
 ; NOFASTPATH-NEXT:    [[TMP3:%.*]] = or i64 [[TMP2]], 4294967295
 ; NOFASTPATH-NEXT:    [[HWASAN_SHADOW:%.*]] = add i64 [[TMP3]], 1
 ; NOFASTPATH-NEXT:    [[TMP4:%.*]] = inttoptr i64 [[HWASAN_SHADOW]] to ptr
@@ -435,16 +435,16 @@ define i32 @test_load32(ptr %a) sanitize_hwaddress {
 ; FASTPATH-SAME: (ptr [[A:%.*]]) #[[ATTR0]] {
 ; FASTPATH-NEXT:  entry:
 ; FASTPATH-NEXT:    [[TMP0:%.*]] = load i64, ptr @__hwasan_tls, align 8
-; FASTPATH-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 8
-; FASTPATH-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 8
+; FASTPATH-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 7
+; FASTPATH-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 7
 ; FASTPATH-NEXT:    [[TMP3:%.*]] = or i64 [[TMP2]], 4294967295
 ; FASTPATH-NEXT:    [[HWASAN_SHADOW:%.*]] = add i64 [[TMP3]], 1
 ; FASTPATH-NEXT:    [[TMP4:%.*]] = inttoptr i64 [[HWASAN_SHADOW]] to ptr
 ; FASTPATH-NEXT:    [[TMP5:%.*]] = ptrtoint ptr [[A]] to i64
-; FASTPATH-NEXT:    [[TMP6:%.*]] = lshr i64 [[TMP5]], 56
+; FASTPATH-NEXT:    [[TMP6:%.*]] = lshr i64 [[TMP5]], 57
 ; FASTPATH-NEXT:    [[TMP7:%.*]] = trunc i64 [[TMP6]] to i8
-; FASTPATH-NEXT:    [[TMP8:%.*]] = shl i64 [[TMP5]], 8
-; FASTPATH-NEXT:    [[TMP9:%.*]] = ashr i64 [[TMP8]], 8
+; FASTPATH-NEXT:    [[TMP8:%.*]] = shl i64 [[TMP5]], 7
+; FASTPATH-NEXT:    [[TMP9:%.*]] = ashr i64 [[TMP8]], 7
 ; FASTPATH-NEXT:    [[TMP10:%.*]] = ashr i64 [[TMP9]], 4
 ; FASTPATH-NEXT:    [[TMP11:%.*]] = getelementptr i8, ptr [[TMP4]], i64 [[TMP10]]
 ; FASTPATH-NEXT:    [[TMP12:%.*]] = load i8, ptr [[TMP11]], align 1
@@ -462,10 +462,10 @@ define i32 @test_load32(ptr %a) sanitize_hwaddress {
 ; ABORT-DYNAMIC-SHADOW-NEXT:  entry:
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[DOTHWASAN_SHADOW:%.*]] = call ptr asm "", "=r,0"(ptr @__hwasan_shadow)
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP0:%.*]] = ptrtoint ptr [[A]] to i64
-; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 56
+; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 57
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP2:%.*]] = trunc i64 [[TMP1]] to i8
-; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 8
-; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 8
+; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 7
+; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 7
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP5:%.*]] = ashr i64 [[TMP4]], 4
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP6:%.*]] = getelementptr i8, ptr [[DOTHWASAN_SHADOW]], i64 [[TMP5]]
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP7:%.*]] = load i8, ptr [[TMP6]], align 1
@@ -483,10 +483,10 @@ define i32 @test_load32(ptr %a) sanitize_hwaddress {
 ; RECOVER-DYNAMIC-SHADOW-NEXT:  entry:
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[DOTHWASAN_SHADOW:%.*]] = call ptr asm "", "=r,0"(ptr @__hwasan_shadow)
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP0:%.*]] = ptrtoint ptr [[A]] to i64
-; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 56
+; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 57
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP2:%.*]] = trunc i64 [[TMP1]] to i8
-; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 8
-; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 8
+; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 7
+; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 7
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP5:%.*]] = ashr i64 [[TMP4]], 4
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP6:%.*]] = getelementptr i8, ptr [[DOTHWASAN_SHADOW]], i64 [[TMP5]]
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP7:%.*]] = load i8, ptr [[TMP6]], align 1
@@ -521,10 +521,10 @@ define i32 @test_load32(ptr %a) sanitize_hwaddress {
 ; ABORT-ZERO-BASED-SHADOW-NEXT:  entry:
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[DOTHWASAN_SHADOW:%.*]] = call ptr asm "", "=r,0"(ptr null)
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP0:%.*]] = ptrtoint ptr [[A]] to i64
-; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 56
+; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 57
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP2:%.*]] = trunc i64 [[TMP1]] to i8
-; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 8
-; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 8
+; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 7
+; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 7
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP5:%.*]] = ashr i64 [[TMP4]], 4
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP6:%.*]] = inttoptr i64 [[TMP5]] to ptr
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP7:%.*]] = load i8, ptr [[TMP6]], align 1
@@ -542,10 +542,10 @@ define i32 @test_load32(ptr %a) sanitize_hwaddress {
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:  entry:
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[DOTHWASAN_SHADOW:%.*]] = call ptr asm "", "=r,0"(ptr null)
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP0:%.*]] = ptrtoint ptr [[A]] to i64
-; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 56
+; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 57
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP2:%.*]] = trunc i64 [[TMP1]] to i8
-; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 8
-; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 8
+; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 7
+; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 7
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP5:%.*]] = ashr i64 [[TMP4]], 4
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP6:%.*]] = inttoptr i64 [[TMP5]] to ptr
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP7:%.*]] = load i8, ptr [[TMP6]], align 1
@@ -585,16 +585,16 @@ define i64 @test_load64(ptr %a) sanitize_hwaddress {
 ; CHECK-SAME: (ptr [[A:%.*]]) #[[ATTR0]] {
 ; CHECK-NEXT:  entry:
 ; CHECK-NEXT:    [[TMP0:%.*]] = load i64, ptr @__hwasan_tls, align 8
-; CHECK-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 8
-; CHECK-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 8
+; CHECK-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 7
+; CHECK-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 7
 ; CHECK-NEXT:    [[TMP3:%.*]] = or i64 [[TMP2]], 4294967295
 ; CHECK-NEXT:    [[HWASAN_SHADOW:%.*]] = add i64 [[TMP3]], 1
 ; CHECK-NEXT:    [[TMP4:%.*]] = inttoptr i64 [[HWASAN_SHADOW]] to ptr
 ; CHECK-NEXT:    [[TMP5:%.*]] = ptrtoint ptr [[A]] to i64
-; CHECK-NEXT:    [[TMP6:%.*]] = lshr i64 [[TMP5]], 56
+; CHECK-NEXT:    [[TMP6:%.*]] = lshr i64 [[TMP5]], 57
 ; CHECK-NEXT:    [[TMP7:%.*]] = trunc i64 [[TMP6]] to i8
-; CHECK-NEXT:    [[TMP8:%.*]] = shl i64 [[TMP5]], 8
-; CHECK-NEXT:    [[TMP9:%.*]] = ashr i64 [[TMP8]], 8
+; CHECK-NEXT:    [[TMP8:%.*]] = shl i64 [[TMP5]], 7
+; CHECK-NEXT:    [[TMP9:%.*]] = ashr i64 [[TMP8]], 7
 ; CHECK-NEXT:    [[TMP10:%.*]] = ashr i64 [[TMP9]], 4
 ; CHECK-NEXT:    [[TMP11:%.*]] = getelementptr i8, ptr [[TMP4]], i64 [[TMP10]]
 ; CHECK-NEXT:    [[TMP12:%.*]] = load i8, ptr [[TMP11]], align 1
@@ -611,8 +611,8 @@ define i64 @test_load64(ptr %a) sanitize_hwaddress {
 ; NOFASTPATH-SAME: (ptr [[A:%.*]]) #[[ATTR0]] {
 ; NOFASTPATH-NEXT:  entry:
 ; NOFASTPATH-NEXT:    [[TMP0:%.*]] = load i64, ptr @__hwasan_tls, align 8
-; NOFASTPATH-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 8
-; NOFASTPATH-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 8
+; NOFASTPATH-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 7
+; NOFASTPATH-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 7
 ; NOFASTPATH-NEXT:    [[TMP3:%.*]] = or i64 [[TMP2]], 4294967295
 ; NOFASTPATH-NEXT:    [[HWASAN_SHADOW:%.*]] = add i64 [[TMP3]], 1
 ; NOFASTPATH-NEXT:    [[TMP4:%.*]] = inttoptr i64 [[HWASAN_SHADOW]] to ptr
@@ -624,16 +624,16 @@ define i64 @test_load64(ptr %a) sanitize_hwaddress {
 ; FASTPATH-SAME: (ptr [[A:%.*]]) #[[ATTR0]] {
 ; FASTPATH-NEXT:  entry:
 ; FASTPATH-NEXT:    [[TMP0:%.*]] = load i64, ptr @__hwasan_tls, align 8
-; FASTPATH-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 8
-; FASTPATH-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 8
+; FASTPATH-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 7
+; FASTPATH-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 7
 ; FASTPATH-NEXT:    [[TMP3:%.*]] = or i64 [[TMP2]], 4294967295
 ; FASTPATH-NEXT:    [[HWASAN_SHADOW:%.*]] = add i64 [[TMP3]], 1
 ; FASTPATH-NEXT:    [[TMP4:%.*]] = inttoptr i64 [[HWASAN_SHADOW]] to ptr
 ; FASTPATH-NEXT:    [[TMP5:%.*]] = ptrtoint ptr [[A]] to i64
-; FASTPATH-NEXT:    [[TMP6:%.*]] = lshr i64 [[TMP5]], 56
+; FASTPATH-NEXT:    [[TMP6:%.*]] = lshr i64 [[TMP5]], 57
 ; FASTPATH-NEXT:    [[TMP7:%.*]] = trunc i64 [[TMP6]] to i8
-; FASTPATH-NEXT:    [[TMP8:%.*]] = shl i64 [[TMP5]], 8
-; FASTPATH-NEXT:    [[TMP9:%.*]] = ashr i64 [[TMP8]], 8
+; FASTPATH-NEXT:    [[TMP8:%.*]] = shl i64 [[TMP5]], 7
+; FASTPATH-NEXT:    [[TMP9:%.*]] = ashr i64 [[TMP8]], 7
 ; FASTPATH-NEXT:    [[TMP10:%.*]] = ashr i64 [[TMP9]], 4
 ; FASTPATH-NEXT:    [[TMP11:%.*]] = getelementptr i8, ptr [[TMP4]], i64 [[TMP10]]
 ; FASTPATH-NEXT:    [[TMP12:%.*]] = load i8, ptr [[TMP11]], align 1
@@ -651,10 +651,10 @@ define i64 @test_load64(ptr %a) sanitize_hwaddress {
 ; ABORT-DYNAMIC-SHADOW-NEXT:  entry:
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[DOTHWASAN_SHADOW:%.*]] = call ptr asm "", "=r,0"(ptr @__hwasan_shadow)
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP0:%.*]] = ptrtoint ptr [[A]] to i64
-; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 56
+; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 57
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP2:%.*]] = trunc i64 [[TMP1]] to i8
-; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 8
-; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 8
+; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 7
+; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 7
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP5:%.*]] = ashr i64 [[TMP4]], 4
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP6:%.*]] = getelementptr i8, ptr [[DOTHWASAN_SHADOW]], i64 [[TMP5]]
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP7:%.*]] = load i8, ptr [[TMP6]], align 1
@@ -672,10 +672,10 @@ define i64 @test_load64(ptr %a) sanitize_hwaddress {
 ; RECOVER-DYNAMIC-SHADOW-NEXT:  entry:
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[DOTHWASAN_SHADOW:%.*]] = call ptr asm "", "=r,0"(ptr @__hwasan_shadow)
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP0:%.*]] = ptrtoint ptr [[A]] to i64
-; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 56
+; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 57
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP2:%.*]] = trunc i64 [[TMP1]] to i8
-; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 8
-; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 8
+; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 7
+; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 7
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP5:%.*]] = ashr i64 [[TMP4]], 4
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP6:%.*]] = getelementptr i8, ptr [[DOTHWASAN_SHADOW]], i64 [[TMP5]]
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP7:%.*]] = load i8, ptr [[TMP6]], align 1
@@ -710,10 +710,10 @@ define i64 @test_load64(ptr %a) sanitize_hwaddress {
 ; ABORT-ZERO-BASED-SHADOW-NEXT:  entry:
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[DOTHWASAN_SHADOW:%.*]] = call ptr asm "", "=r,0"(ptr null)
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP0:%.*]] = ptrtoint ptr [[A]] to i64
-; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 56
+; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 57
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP2:%.*]] = trunc i64 [[TMP1]] to i8
-; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 8
-; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 8
+; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 7
+; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 7
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP5:%.*]] = ashr i64 [[TMP4]], 4
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP6:%.*]] = inttoptr i64 [[TMP5]] to ptr
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP7:%.*]] = load i8, ptr [[TMP6]], align 1
@@ -731,10 +731,10 @@ define i64 @test_load64(ptr %a) sanitize_hwaddress {
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:  entry:
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[DOTHWASAN_SHADOW:%.*]] = call ptr asm "", "=r,0"(ptr null)
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP0:%.*]] = ptrtoint ptr [[A]] to i64
-; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 56
+; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 57
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP2:%.*]] = trunc i64 [[TMP1]] to i8
-; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 8
-; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 8
+; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 7
+; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 7
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP5:%.*]] = ashr i64 [[TMP4]], 4
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP6:%.*]] = inttoptr i64 [[TMP5]] to ptr
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP7:%.*]] = load i8, ptr [[TMP6]], align 1
@@ -774,16 +774,16 @@ define i128 @test_load128(ptr %a) sanitize_hwaddress {
 ; CHECK-SAME: (ptr [[A:%.*]]) #[[ATTR0]] {
 ; CHECK-NEXT:  entry:
 ; CHECK-NEXT:    [[TMP0:%.*]] = load i64, ptr @__hwasan_tls, align 8
-; CHECK-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 8
-; CHECK-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 8
+; CHECK-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 7
+; CHECK-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 7
 ; CHECK-NEXT:    [[TMP3:%.*]] = or i64 [[TMP2]], 4294967295
 ; CHECK-NEXT:    [[HWASAN_SHADOW:%.*]] = add i64 [[TMP3]], 1
 ; CHECK-NEXT:    [[TMP4:%.*]] = inttoptr i64 [[HWASAN_SHADOW]] to ptr
 ; CHECK-NEXT:    [[TMP5:%.*]] = ptrtoint ptr [[A]] to i64
-; CHECK-NEXT:    [[TMP6:%.*]] = lshr i64 [[TMP5]], 56
+; CHECK-NEXT:    [[TMP6:%.*]] = lshr i64 [[TMP5]], 57
 ; CHECK-NEXT:    [[TMP7:%.*]] = trunc i64 [[TMP6]] to i8
-; CHECK-NEXT:    [[TMP8:%.*]] = shl i64 [[TMP5]], 8
-; CHECK-NEXT:    [[TMP9:%.*]] = ashr i64 [[TMP8]], 8
+; CHECK-NEXT:    [[TMP8:%.*]] = shl i64 [[TMP5]], 7
+; CHECK-NEXT:    [[TMP9:%.*]] = ashr i64 [[TMP8]], 7
 ; CHECK-NEXT:    [[TMP10:%.*]] = ashr i64 [[TMP9]], 4
 ; CHECK-NEXT:    [[TMP11:%.*]] = getelementptr i8, ptr [[TMP4]], i64 [[TMP10]]
 ; CHECK-NEXT:    [[TMP12:%.*]] = load i8, ptr [[TMP11]], align 1
@@ -800,8 +800,8 @@ define i128 @test_load128(ptr %a) sanitize_hwaddress {
 ; NOFASTPATH-SAME: (ptr [[A:%.*]]) #[[ATTR0]] {
 ; NOFASTPATH-NEXT:  entry:
 ; NOFASTPATH-NEXT:    [[TMP0:%.*]] = load i64, ptr @__hwasan_tls, align 8
-; NOFASTPATH-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 8
-; NOFASTPATH-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 8
+; NOFASTPATH-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 7
+; NOFASTPATH-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 7
 ; NOFASTPATH-NEXT:    [[TMP3:%.*]] = or i64 [[TMP2]], 4294967295
 ; NOFASTPATH-NEXT:    [[HWASAN_SHADOW:%.*]] = add i64 [[TMP3]], 1
 ; NOFASTPATH-NEXT:    [[TMP4:%.*]] = inttoptr i64 [[HWASAN_SHADOW]] to ptr
@@ -813,16 +813,16 @@ define i128 @test_load128(ptr %a) sanitize_hwaddress {
 ; FASTPATH-SAME: (ptr [[A:%.*]]) #[[ATTR0]] {
 ; FASTPATH-NEXT:  entry:
 ; FASTPATH-NEXT:    [[TMP0:%.*]] = load i64, ptr @__hwasan_tls, align 8
-; FASTPATH-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 8
-; FASTPATH-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 8
+; FASTPATH-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 7
+; FASTPATH-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 7
 ; FASTPATH-NEXT:    [[TMP3:%.*]] = or i64 [[TMP2]], 4294967295
 ; FASTPATH-NEXT:    [[HWASAN_SHADOW:%.*]] = add i64 [[TMP3]], 1
 ; FASTPATH-NEXT:    [[TMP4:%.*]] = inttoptr i64 [[HWASAN_SHADOW]] to ptr
 ; FASTPATH-NEXT:    [[TMP5:%.*]] = ptrtoint ptr [[A]] to i64
-; FASTPATH-NEXT:    [[TMP6:%.*]] = lshr i64 [[TMP5]], 56
+; FASTPATH-NEXT:    [[TMP6:%.*]] = lshr i64 [[TMP5]], 57
 ; FASTPATH-NEXT:    [[TMP7:%.*]] = trunc i64 [[TMP6]] to i8
-; FASTPATH-NEXT:    [[TMP8:%.*]] = shl i64 [[TMP5]], 8
-; FASTPATH-NEXT:    [[TMP9:%.*]] = ashr i64 [[TMP8]], 8
+; FASTPATH-NEXT:    [[TMP8:%.*]] = shl i64 [[TMP5]], 7
+; FASTPATH-NEXT:    [[TMP9:%.*]] = ashr i64 [[TMP8]], 7
 ; FASTPATH-NEXT:    [[TMP10:%.*]] = ashr i64 [[TMP9]], 4
 ; FASTPATH-NEXT:    [[TMP11:%.*]] = getelementptr i8, ptr [[TMP4]], i64 [[TMP10]]
 ; FASTPATH-NEXT:    [[TMP12:%.*]] = load i8, ptr [[TMP11]], align 1
@@ -840,10 +840,10 @@ define i128 @test_load128(ptr %a) sanitize_hwaddress {
 ; ABORT-DYNAMIC-SHADOW-NEXT:  entry:
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[DOTHWASAN_SHADOW:%.*]] = call ptr asm "", "=r,0"(ptr @__hwasan_shadow)
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP0:%.*]] = ptrtoint ptr [[A]] to i64
-; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 56
+; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 57
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP2:%.*]] = trunc i64 [[TMP1]] to i8
-; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 8
-; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 8
+; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 7
+; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 7
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP5:%.*]] = ashr i64 [[TMP4]], 4
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP6:%.*]] = getelementptr i8, ptr [[DOTHWASAN_SHADOW]], i64 [[TMP5]]
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP7:%.*]] = load i8, ptr [[TMP6]], align 1
@@ -861,10 +861,10 @@ define i128 @test_load128(ptr %a) sanitize_hwaddress {
 ; RECOVER-DYNAMIC-SHADOW-NEXT:  entry:
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[DOTHWASAN_SHADOW:%.*]] = call ptr asm "", "=r,0"(ptr @__hwasan_shadow)
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP0:%.*]] = ptrtoint ptr [[A]] to i64
-; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 56
+; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 57
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP2:%.*]] = trunc i64 [[TMP1]] to i8
-; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 8
-; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 8
+; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 7
+; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 7
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP5:%.*]] = ashr i64 [[TMP4]], 4
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP6:%.*]] = getelementptr i8, ptr [[DOTHWASAN_SHADOW]], i64 [[TMP5]]
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP7:%.*]] = load i8, ptr [[TMP6]], align 1
@@ -899,10 +899,10 @@ define i128 @test_load128(ptr %a) sanitize_hwaddress {
 ; ABORT-ZERO-BASED-SHADOW-NEXT:  entry:
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[DOTHWASAN_SHADOW:%.*]] = call ptr asm "", "=r,0"(ptr null)
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP0:%.*]] = ptrtoint ptr [[A]] to i64
-; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 56
+; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 57
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP2:%.*]] = trunc i64 [[TMP1]] to i8
-; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 8
-; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 8
+; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 7
+; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 7
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP5:%.*]] = ashr i64 [[TMP4]], 4
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP6:%.*]] = inttoptr i64 [[TMP5]] to ptr
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP7:%.*]] = load i8, ptr [[TMP6]], align 1
@@ -920,10 +920,10 @@ define i128 @test_load128(ptr %a) sanitize_hwaddress {
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:  entry:
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[DOTHWASAN_SHADOW:%.*]] = call ptr asm "", "=r,0"(ptr null)
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP0:%.*]] = ptrtoint ptr [[A]] to i64
-; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 56
+; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 57
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP2:%.*]] = trunc i64 [[TMP1]] to i8
-; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 8
-; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 8
+; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 7
+; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 7
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP5:%.*]] = ashr i64 [[TMP4]], 4
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP6:%.*]] = inttoptr i64 [[TMP5]] to ptr
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP7:%.*]] = load i8, ptr [[TMP6]], align 1
@@ -963,8 +963,8 @@ define i40 @test_load40(ptr %a) sanitize_hwaddress {
 ; CHECK-SAME: (ptr [[A:%.*]]) #[[ATTR0]] {
 ; CHECK-NEXT:  entry:
 ; CHECK-NEXT:    [[TMP0:%.*]] = load i64, ptr @__hwasan_tls, align 8
-; CHECK-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 8
-; CHECK-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 8
+; CHECK-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 7
+; CHECK-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 7
 ; CHECK-NEXT:    [[TMP3:%.*]] = or i64 [[TMP2]], 4294967295
 ; CHECK-NEXT:    [[HWASAN_SHADOW:%.*]] = add i64 [[TMP3]], 1
 ; CHECK-NEXT:    [[TMP4:%.*]] = inttoptr i64 [[HWASAN_SHADOW]] to ptr
@@ -977,8 +977,8 @@ define i40 @test_load40(ptr %a) sanitize_hwaddress {
 ; NOFASTPATH-SAME: (ptr [[A:%.*]]) #[[ATTR0]] {
 ; NOFASTPATH-NEXT:  entry:
 ; NOFASTPATH-NEXT:    [[TMP0:%.*]] = load i64, ptr @__hwasan_tls, align 8
-; NOFASTPATH-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 8
-; NOFASTPATH-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 8
+; NOFASTPATH-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 7
+; NOFASTPATH-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 7
 ; NOFASTPATH-NEXT:    [[TMP3:%.*]] = or i64 [[TMP2]], 4294967295
 ; NOFASTPATH-NEXT:    [[HWASAN_SHADOW:%.*]] = add i64 [[TMP3]], 1
 ; NOFASTPATH-NEXT:    [[TMP4:%.*]] = inttoptr i64 [[HWASAN_SHADOW]] to ptr
@@ -991,8 +991,8 @@ define i40 @test_load40(ptr %a) sanitize_hwaddress {
 ; FASTPATH-SAME: (ptr [[A:%.*]]) #[[ATTR0]] {
 ; FASTPATH-NEXT:  entry:
 ; FASTPATH-NEXT:    [[TMP0:%.*]] = load i64, ptr @__hwasan_tls, align 8
-; FASTPATH-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 8
-; FASTPATH-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 8
+; FASTPATH-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 7
+; FASTPATH-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 7
 ; FASTPATH-NEXT:    [[TMP3:%.*]] = or i64 [[TMP2]], 4294967295
 ; FASTPATH-NEXT:    [[HWASAN_SHADOW:%.*]] = add i64 [[TMP3]], 1
 ; FASTPATH-NEXT:    [[TMP4:%.*]] = inttoptr i64 [[HWASAN_SHADOW]] to ptr
@@ -1047,16 +1047,16 @@ define void @test_store8(ptr %a, i8 %b) sanitize_hwaddress {
 ; CHECK-SAME: (ptr [[A:%.*]], i8 [[B:%.*]]) #[[ATTR0]] {
 ; CHECK-NEXT:  entry:
 ; CHECK-NEXT:    [[TMP0:%.*]] = load i64, ptr @__hwasan_tls, align 8
-; CHECK-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 8
-; CHECK-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 8
+; CHECK-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 7
+; CHECK-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 7
 ; CHECK-NEXT:    [[TMP3:%.*]] = or i64 [[TMP2]], 4294967295
 ; CHECK-NEXT:    [[HWASAN_SHADOW:%.*]] = add i64 [[TMP3]], 1
 ; CHECK-NEXT:    [[TMP4:%.*]] = inttoptr i64 [[HWASAN_SHADOW]] to ptr
 ; CHECK-NEXT:    [[TMP5:%.*]] = ptrtoint ptr [[A]] to i64
-; CHECK-NEXT:    [[TMP6:%.*]] = lshr i64 [[TMP5]], 56
+; CHECK-NEXT:    [[TMP6:%.*]] = lshr i64 [[TMP5]], 57
 ; CHECK-NEXT:    [[TMP7:%.*]] = trunc i64 [[TMP6]] to i8
-; CHECK-NEXT:    [[TMP8:%.*]] = shl i64 [[TMP5]], 8
-; CHECK-NEXT:    [[TMP9:%.*]] = ashr i64 [[TMP8]], 8
+; CHECK-NEXT:    [[TMP8:%.*]] = shl i64 [[TMP5]], 7
+; CHECK-NEXT:    [[TMP9:%.*]] = ashr i64 [[TMP8]], 7
 ; CHECK-NEXT:    [[TMP10:%.*]] = ashr i64 [[TMP9]], 4
 ; CHECK-NEXT:    [[TMP11:%.*]] = getelementptr i8, ptr [[TMP4]], i64 [[TMP10]]
 ; CHECK-NEXT:    [[TMP12:%.*]] = load i8, ptr [[TMP11]], align 1
@@ -1073,8 +1073,8 @@ define void @test_store8(ptr %a, i8 %b) sanitize_hwaddress {
 ; NOFASTPATH-SAME: (ptr [[A:%.*]], i8 [[B:%.*]]) #[[ATTR0]] {
 ; NOFASTPATH-NEXT:  entry:
 ; NOFASTPATH-NEXT:    [[TMP0:%.*]] = load i64, ptr @__hwasan_tls, align 8
-; NOFASTPATH-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 8
-; NOFASTPATH-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 8
+; NOFASTPATH-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 7
+; NOFASTPATH-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 7
 ; NOFASTPATH-NEXT:    [[TMP3:%.*]] = or i64 [[TMP2]], 4294967295
 ; NOFASTPATH-NEXT:    [[HWASAN_SHADOW:%.*]] = add i64 [[TMP3]], 1
 ; NOFASTPATH-NEXT:    [[TMP4:%.*]] = inttoptr i64 [[HWASAN_SHADOW]] to ptr
@@ -1086,16 +1086,16 @@ define void @test_store8(ptr %a, i8 %b) sanitize_hwaddress {
 ; FASTPATH-SAME: (ptr [[A:%.*]], i8 [[B:%.*]]) #[[ATTR0]] {
 ; FASTPATH-NEXT:  entry:
 ; FASTPATH-NEXT:    [[TMP0:%.*]] = load i64, ptr @__hwasan_tls, align 8
-; FASTPATH-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 8
-; FASTPATH-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 8
+; FASTPATH-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 7
+; FASTPATH-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 7
 ; FASTPATH-NEXT:    [[TMP3:%.*]] = or i64 [[TMP2]], 4294967295
 ; FASTPATH-NEXT:    [[HWASAN_SHADOW:%.*]] = add i64 [[TMP3]], 1
 ; FASTPATH-NEXT:    [[TMP4:%.*]] = inttoptr i64 [[HWASAN_SHADOW]] to ptr
 ; FASTPATH-NEXT:    [[TMP5:%.*]] = ptrtoint ptr [[A]] to i64
-; FASTPATH-NEXT:    [[TMP6:%.*]] = lshr i64 [[TMP5]], 56
+; FASTPATH-NEXT:    [[TMP6:%.*]] = lshr i64 [[TMP5]], 57
 ; FASTPATH-NEXT:    [[TMP7:%.*]] = trunc i64 [[TMP6]] to i8
-; FASTPATH-NEXT:    [[TMP8:%.*]] = shl i64 [[TMP5]], 8
-; FASTPATH-NEXT:    [[TMP9:%.*]] = ashr i64 [[TMP8]], 8
+; FASTPATH-NEXT:    [[TMP8:%.*]] = shl i64 [[TMP5]], 7
+; FASTPATH-NEXT:    [[TMP9:%.*]] = ashr i64 [[TMP8]], 7
 ; FASTPATH-NEXT:    [[TMP10:%.*]] = ashr i64 [[TMP9]], 4
 ; FASTPATH-NEXT:    [[TMP11:%.*]] = getelementptr i8, ptr [[TMP4]], i64 [[TMP10]]
 ; FASTPATH-NEXT:    [[TMP12:%.*]] = load i8, ptr [[TMP11]], align 1
@@ -1113,10 +1113,10 @@ define void @test_store8(ptr %a, i8 %b) sanitize_hwaddress {
 ; ABORT-DYNAMIC-SHADOW-NEXT:  entry:
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[DOTHWASAN_SHADOW:%.*]] = call ptr asm "", "=r,0"(ptr @__hwasan_shadow)
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP0:%.*]] = ptrtoint ptr [[A]] to i64
-; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 56
+; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 57
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP2:%.*]] = trunc i64 [[TMP1]] to i8
-; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 8
-; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 8
+; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 7
+; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 7
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP5:%.*]] = ashr i64 [[TMP4]], 4
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP6:%.*]] = getelementptr i8, ptr [[DOTHWASAN_SHADOW]], i64 [[TMP5]]
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP7:%.*]] = load i8, ptr [[TMP6]], align 1
@@ -1134,10 +1134,10 @@ define void @test_store8(ptr %a, i8 %b) sanitize_hwaddress {
 ; RECOVER-DYNAMIC-SHADOW-NEXT:  entry:
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[DOTHWASAN_SHADOW:%.*]] = call ptr asm "", "=r,0"(ptr @__hwasan_shadow)
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP0:%.*]] = ptrtoint ptr [[A]] to i64
-; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 56
+; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 57
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP2:%.*]] = trunc i64 [[TMP1]] to i8
-; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 8
-; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 8
+; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 7
+; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 7
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP5:%.*]] = ashr i64 [[TMP4]], 4
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP6:%.*]] = getelementptr i8, ptr [[DOTHWASAN_SHADOW]], i64 [[TMP5]]
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP7:%.*]] = load i8, ptr [[TMP6]], align 1
@@ -1172,10 +1172,10 @@ define void @test_store8(ptr %a, i8 %b) sanitize_hwaddress {
 ; ABORT-ZERO-BASED-SHADOW-NEXT:  entry:
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[DOTHWASAN_SHADOW:%.*]] = call ptr asm "", "=r,0"(ptr null)
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP0:%.*]] = ptrtoint ptr [[A]] to i64
-; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 56
+; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 57
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP2:%.*]] = trunc i64 [[TMP1]] to i8
-; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 8
-; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 8
+; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 7
+; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 7
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP5:%.*]] = ashr i64 [[TMP4]], 4
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP6:%.*]] = inttoptr i64 [[TMP5]] to ptr
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP7:%.*]] = load i8, ptr [[TMP6]], align 1
@@ -1193,10 +1193,10 @@ define void @test_store8(ptr %a, i8 %b) sanitize_hwaddress {
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:  entry:
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[DOTHWASAN_SHADOW:%.*]] = call ptr asm "", "=r,0"(ptr null)
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP0:%.*]] = ptrtoint ptr [[A]] to i64
-; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 56
+; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 57
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP2:%.*]] = trunc i64 [[TMP1]] to i8
-; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 8
-; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 8
+; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 7
+; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 7
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP5:%.*]] = ashr i64 [[TMP4]], 4
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP6:%.*]] = inttoptr i64 [[TMP5]] to ptr
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP7:%.*]] = load i8, ptr [[TMP6]], align 1
@@ -1236,16 +1236,16 @@ define void @test_store16(ptr %a, i16 %b) sanitize_hwaddress {
 ; CHECK-SAME: (ptr [[A:%.*]], i16 [[B:%.*]]) #[[ATTR0]] {
 ; CHECK-NEXT:  entry:
 ; CHECK-NEXT:    [[TMP0:%.*]] = load i64, ptr @__hwasan_tls, align 8
-; CHECK-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 8
-; CHECK-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 8
+; CHECK-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 7
+; CHECK-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 7
 ; CHECK-NEXT:    [[TMP3:%.*]] = or i64 [[TMP2]], 4294967295
 ; CHECK-NEXT:    [[HWASAN_SHADOW:%.*]] = add i64 [[TMP3]], 1
 ; CHECK-NEXT:    [[TMP4:%.*]] = inttoptr i64 [[HWASAN_SHADOW]] to ptr
 ; CHECK-NEXT:    [[TMP5:%.*]] = ptrtoint ptr [[A]] to i64
-; CHECK-NEXT:    [[TMP6:%.*]] = lshr i64 [[TMP5]], 56
+; CHECK-NEXT:    [[TMP6:%.*]] = lshr i64 [[TMP5]], 57
 ; CHECK-NEXT:    [[TMP7:%.*]] = trunc i64 [[TMP6]] to i8
-; CHECK-NEXT:    [[TMP8:%.*]] = shl i64 [[TMP5]], 8
-; CHECK-NEXT:    [[TMP9:%.*]] = ashr i64 [[TMP8]], 8
+; CHECK-NEXT:    [[TMP8:%.*]] = shl i64 [[TMP5]], 7
+; CHECK-NEXT:    [[TMP9:%.*]] = ashr i64 [[TMP8]], 7
 ; CHECK-NEXT:    [[TMP10:%.*]] = ashr i64 [[TMP9]], 4
 ; CHECK-NEXT:    [[TMP11:%.*]] = getelementptr i8, ptr [[TMP4]], i64 [[TMP10]]
 ; CHECK-NEXT:    [[TMP12:%.*]] = load i8, ptr [[TMP11]], align 1
@@ -1262,8 +1262,8 @@ define void @test_store16(ptr %a, i16 %b) sanitize_hwaddress {
 ; NOFASTPATH-SAME: (ptr [[A:%.*]], i16 [[B:%.*]]) #[[ATTR0]] {
 ; NOFASTPATH-NEXT:  entry:
 ; NOFASTPATH-NEXT:    [[TMP0:%.*]] = load i64, ptr @__hwasan_tls, align 8
-; NOFASTPATH-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 8
-; NOFASTPATH-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 8
+; NOFASTPATH-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 7
+; NOFASTPATH-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 7
 ; NOFASTPATH-NEXT:    [[TMP3:%.*]] = or i64 [[TMP2]], 4294967295
 ; NOFASTPATH-NEXT:    [[HWASAN_SHADOW:%.*]] = add i64 [[TMP3]], 1
 ; NOFASTPATH-NEXT:    [[TMP4:%.*]] = inttoptr i64 [[HWASAN_SHADOW]] to ptr
@@ -1275,16 +1275,16 @@ define void @test_store16(ptr %a, i16 %b) sanitize_hwaddress {
 ; FASTPATH-SAME: (ptr [[A:%.*]], i16 [[B:%.*]]) #[[ATTR0]] {
 ; FASTPATH-NEXT:  entry:
 ; FASTPATH-NEXT:    [[TMP0:%.*]] = load i64, ptr @__hwasan_tls, align 8
-; FASTPATH-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 8
-; FASTPATH-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 8
+; FASTPATH-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 7
+; FASTPATH-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 7
 ; FASTPATH-NEXT:    [[TMP3:%.*]] = or i64 [[TMP2]], 4294967295
 ; FASTPATH-NEXT:    [[HWASAN_SHADOW:%.*]] = add i64 [[TMP3]], 1
 ; FASTPATH-NEXT:    [[TMP4:%.*]] = inttoptr i64 [[HWASAN_SHADOW]] to ptr
 ; FASTPATH-NEXT:    [[TMP5:%.*]] = ptrtoint ptr [[A]] to i64
-; FASTPATH-NEXT:    [[TMP6:%.*]] = lshr i64 [[TMP5]], 56
+; FASTPATH-NEXT:    [[TMP6:%.*]] = lshr i64 [[TMP5]], 57
 ; FASTPATH-NEXT:    [[TMP7:%.*]] = trunc i64 [[TMP6]] to i8
-; FASTPATH-NEXT:    [[TMP8:%.*]] = shl i64 [[TMP5]], 8
-; FASTPATH-NEXT:    [[TMP9:%.*]] = ashr i64 [[TMP8]], 8
+; FASTPATH-NEXT:    [[TMP8:%.*]] = shl i64 [[TMP5]], 7
+; FASTPATH-NEXT:    [[TMP9:%.*]] = ashr i64 [[TMP8]], 7
 ; FASTPATH-NEXT:    [[TMP10:%.*]] = ashr i64 [[TMP9]], 4
 ; FASTPATH-NEXT:    [[TMP11:%.*]] = getelementptr i8, ptr [[TMP4]], i64 [[TMP10]]
 ; FASTPATH-NEXT:    [[TMP12:%.*]] = load i8, ptr [[TMP11]], align 1
@@ -1302,10 +1302,10 @@ define void @test_store16(ptr %a, i16 %b) sanitize_hwaddress {
 ; ABORT-DYNAMIC-SHADOW-NEXT:  entry:
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[DOTHWASAN_SHADOW:%.*]] = call ptr asm "", "=r,0"(ptr @__hwasan_shadow)
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP0:%.*]] = ptrtoint ptr [[A]] to i64
-; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 56
+; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 57
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP2:%.*]] = trunc i64 [[TMP1]] to i8
-; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 8
-; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 8
+; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 7
+; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 7
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP5:%.*]] = ashr i64 [[TMP4]], 4
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP6:%.*]] = getelementptr i8, ptr [[DOTHWASAN_SHADOW]], i64 [[TMP5]]
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP7:%.*]] = load i8, ptr [[TMP6]], align 1
@@ -1323,10 +1323,10 @@ define void @test_store16(ptr %a, i16 %b) sanitize_hwaddress {
 ; RECOVER-DYNAMIC-SHADOW-NEXT:  entry:
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[DOTHWASAN_SHADOW:%.*]] = call ptr asm "", "=r,0"(ptr @__hwasan_shadow)
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP0:%.*]] = ptrtoint ptr [[A]] to i64
-; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 56
+; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 57
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP2:%.*]] = trunc i64 [[TMP1]] to i8
-; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 8
-; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 8
+; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 7
+; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 7
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP5:%.*]] = ashr i64 [[TMP4]], 4
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP6:%.*]] = getelementptr i8, ptr [[DOTHWASAN_SHADOW]], i64 [[TMP5]]
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP7:%.*]] = load i8, ptr [[TMP6]], align 1
@@ -1361,10 +1361,10 @@ define void @test_store16(ptr %a, i16 %b) sanitize_hwaddress {
 ; ABORT-ZERO-BASED-SHADOW-NEXT:  entry:
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[DOTHWASAN_SHADOW:%.*]] = call ptr asm "", "=r,0"(ptr null)
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP0:%.*]] = ptrtoint ptr [[A]] to i64
-; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 56
+; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 57
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP2:%.*]] = trunc i64 [[TMP1]] to i8
-; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 8
-; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 8
+; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 7
+; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 7
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP5:%.*]] = ashr i64 [[TMP4]], 4
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP6:%.*]] = inttoptr i64 [[TMP5]] to ptr
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP7:%.*]] = load i8, ptr [[TMP6]], align 1
@@ -1382,10 +1382,10 @@ define void @test_store16(ptr %a, i16 %b) sanitize_hwaddress {
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:  entry:
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[DOTHWASAN_SHADOW:%.*]] = call ptr asm "", "=r,0"(ptr null)
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP0:%.*]] = ptrtoint ptr [[A]] to i64
-; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 56
+; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 57
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP2:%.*]] = trunc i64 [[TMP1]] to i8
-; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 8
-; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 8
+; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 7
+; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 7
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP5:%.*]] = ashr i64 [[TMP4]], 4
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP6:%.*]] = inttoptr i64 [[TMP5]] to ptr
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP7:%.*]] = load i8, ptr [[TMP6]], align 1
@@ -1425,16 +1425,16 @@ define void @test_store32(ptr %a, i32 %b) sanitize_hwaddress {
 ; CHECK-SAME: (ptr [[A:%.*]], i32 [[B:%.*]]) #[[ATTR0]] {
 ; CHECK-NEXT:  entry:
 ; CHECK-NEXT:    [[TMP0:%.*]] = load i64, ptr @__hwasan_tls, align 8
-; CHECK-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 8
-; CHECK-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 8
+; CHECK-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 7
+; CHECK-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 7
 ; CHECK-NEXT:    [[TMP3:%.*]] = or i64 [[TMP2]], 4294967295
 ; CHECK-NEXT:    [[HWASAN_SHADOW:%.*]] = add i64 [[TMP3]], 1
 ; CHECK-NEXT:    [[TMP4:%.*]] = inttoptr i64 [[HWASAN_SHADOW]] to ptr
 ; CHECK-NEXT:    [[TMP5:%.*]] = ptrtoint ptr [[A]] to i64
-; CHECK-NEXT:    [[TMP6:%.*]] = lshr i64 [[TMP5]], 56
+; CHECK-NEXT:    [[TMP6:%.*]] = lshr i64 [[TMP5]], 57
 ; CHECK-NEXT:    [[TMP7:%.*]] = trunc i64 [[TMP6]] to i8
-; CHECK-NEXT:    [[TMP8:%.*]] = shl i64 [[TMP5]], 8
-; CHECK-NEXT:    [[TMP9:%.*]] = ashr i64 [[TMP8]], 8
+; CHECK-NEXT:    [[TMP8:%.*]] = shl i64 [[TMP5]], 7
+; CHECK-NEXT:    [[TMP9:%.*]] = ashr i64 [[TMP8]], 7
 ; CHECK-NEXT:    [[TMP10:%.*]] = ashr i64 [[TMP9]], 4
 ; CHECK-NEXT:    [[TMP11:%.*]] = getelementptr i8, ptr [[TMP4]], i64 [[TMP10]]
 ; CHECK-NEXT:    [[TMP12:%.*]] = load i8, ptr [[TMP11]], align 1
@@ -1451,8 +1451,8 @@ define void @test_store32(ptr %a, i32 %b) sanitize_hwaddress {
 ; NOFASTPATH-SAME: (ptr [[A:%.*]], i32 [[B:%.*]]) #[[ATTR0]] {
 ; NOFASTPATH-NEXT:  entry:
 ; NOFASTPATH-NEXT:    [[TMP0:%.*]] = load i64, ptr @__hwasan_tls, align 8
-; NOFASTPATH-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 8
-; NOFASTPATH-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 8
+; NOFASTPATH-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 7
+; NOFASTPATH-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 7
 ; NOFASTPATH-NEXT:    [[TMP3:%.*]] = or i64 [[TMP2]], 4294967295
 ; NOFASTPATH-NEXT:    [[HWASAN_SHADOW:%.*]] = add i64 [[TMP3]], 1
 ; NOFASTPATH-NEXT:    [[TMP4:%.*]] = inttoptr i64 [[HWASAN_SHADOW]] to ptr
@@ -1464,16 +1464,16 @@ define void @test_store32(ptr %a, i32 %b) sanitize_hwaddress {
 ; FASTPATH-SAME: (ptr [[A:%.*]], i32 [[B:%.*]]) #[[ATTR0]] {
 ; FASTPATH-NEXT:  entry:
 ; FASTPATH-NEXT:    [[TMP0:%.*]] = load i64, ptr @__hwasan_tls, align 8
-; FASTPATH-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 8
-; FASTPATH-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 8
+; FASTPATH-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 7
+; FASTPATH-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 7
 ; FASTPATH-NEXT:    [[TMP3:%.*]] = or i64 [[TMP2]], 4294967295
 ; FASTPATH-NEXT:    [[HWASAN_SHADOW:%.*]] = add i64 [[TMP3]], 1
 ; FASTPATH-NEXT:    [[TMP4:%.*]] = inttoptr i64 [[HWASAN_SHADOW]] to ptr
 ; FASTPATH-NEXT:    [[TMP5:%.*]] = ptrtoint ptr [[A]] to i64
-; FASTPATH-NEXT:    [[TMP6:%.*]] = lshr i64 [[TMP5]], 56
+; FASTPATH-NEXT:    [[TMP6:%.*]] = lshr i64 [[TMP5]], 57
 ; FASTPATH-NEXT:    [[TMP7:%.*]] = trunc i64 [[TMP6]] to i8
-; FASTPATH-NEXT:    [[TMP8:%.*]] = shl i64 [[TMP5]], 8
-; FASTPATH-NEXT:    [[TMP9:%.*]] = ashr i64 [[TMP8]], 8
+; FASTPATH-NEXT:    [[TMP8:%.*]] = shl i64 [[TMP5]], 7
+; FASTPATH-NEXT:    [[TMP9:%.*]] = ashr i64 [[TMP8]], 7
 ; FASTPATH-NEXT:    [[TMP10:%.*]] = ashr i64 [[TMP9]], 4
 ; FASTPATH-NEXT:    [[TMP11:%.*]] = getelementptr i8, ptr [[TMP4]], i64 [[TMP10]]
 ; FASTPATH-NEXT:    [[TMP12:%.*]] = load i8, ptr [[TMP11]], align 1
@@ -1491,10 +1491,10 @@ define void @test_store32(ptr %a, i32 %b) sanitize_hwaddress {
 ; ABORT-DYNAMIC-SHADOW-NEXT:  entry:
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[DOTHWASAN_SHADOW:%.*]] = call ptr asm "", "=r,0"(ptr @__hwasan_shadow)
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP0:%.*]] = ptrtoint ptr [[A]] to i64
-; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 56
+; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 57
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP2:%.*]] = trunc i64 [[TMP1]] to i8
-; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 8
-; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 8
+; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 7
+; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 7
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP5:%.*]] = ashr i64 [[TMP4]], 4
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP6:%.*]] = getelementptr i8, ptr [[DOTHWASAN_SHADOW]], i64 [[TMP5]]
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP7:%.*]] = load i8, ptr [[TMP6]], align 1
@@ -1512,10 +1512,10 @@ define void @test_store32(ptr %a, i32 %b) sanitize_hwaddress {
 ; RECOVER-DYNAMIC-SHADOW-NEXT:  entry:
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[DOTHWASAN_SHADOW:%.*]] = call ptr asm "", "=r,0"(ptr @__hwasan_shadow)
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP0:%.*]] = ptrtoint ptr [[A]] to i64
-; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 56
+; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 57
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP2:%.*]] = trunc i64 [[TMP1]] to i8
-; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 8
-; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 8
+; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 7
+; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 7
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP5:%.*]] = ashr i64 [[TMP4]], 4
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP6:%.*]] = getelementptr i8, ptr [[DOTHWASAN_SHADOW]], i64 [[TMP5]]
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP7:%.*]] = load i8, ptr [[TMP6]], align 1
@@ -1550,10 +1550,10 @@ define void @test_store32(ptr %a, i32 %b) sanitize_hwaddress {
 ; ABORT-ZERO-BASED-SHADOW-NEXT:  entry:
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[DOTHWASAN_SHADOW:%.*]] = call ptr asm "", "=r,0"(ptr null)
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP0:%.*]] = ptrtoint ptr [[A]] to i64
-; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 56
+; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 57
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP2:%.*]] = trunc i64 [[TMP1]] to i8
-; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 8
-; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 8
+; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 7
+; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 7
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP5:%.*]] = ashr i64 [[TMP4]], 4
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP6:%.*]] = inttoptr i64 [[TMP5]] to ptr
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP7:%.*]] = load i8, ptr [[TMP6]], align 1
@@ -1571,10 +1571,10 @@ define void @test_store32(ptr %a, i32 %b) sanitize_hwaddress {
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:  entry:
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[DOTHWASAN_SHADOW:%.*]] = call ptr asm "", "=r,0"(ptr null)
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP0:%.*]] = ptrtoint ptr [[A]] to i64
-; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 56
+; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 57
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP2:%.*]] = trunc i64 [[TMP1]] to i8
-; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 8
-; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 8
+; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 7
+; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 7
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP5:%.*]] = ashr i64 [[TMP4]], 4
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP6:%.*]] = inttoptr i64 [[TMP5]] to ptr
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP7:%.*]] = load i8, ptr [[TMP6]], align 1
@@ -1614,16 +1614,16 @@ define void @test_store64(ptr %a, i64 %b) sanitize_hwaddress {
 ; CHECK-SAME: (ptr [[A:%.*]], i64 [[B:%.*]]) #[[ATTR0]] {
 ; CHECK-NEXT:  entry:
 ; CHECK-NEXT:    [[TMP0:%.*]] = load i64, ptr @__hwasan_tls, align 8
-; CHECK-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 8
-; CHECK-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 8
+; CHECK-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 7
+; CHECK-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 7
 ; CHECK-NEXT:    [[TMP3:%.*]] = or i64 [[TMP2]], 4294967295
 ; CHECK-NEXT:    [[HWASAN_SHADOW:%.*]] = add i64 [[TMP3]], 1
 ; CHECK-NEXT:    [[TMP4:%.*]] = inttoptr i64 [[HWASAN_SHADOW]] to ptr
 ; CHECK-NEXT:    [[TMP5:%.*]] = ptrtoint ptr [[A]] to i64
-; CHECK-NEXT:    [[TMP6:%.*]] = lshr i64 [[TMP5]], 56
+; CHECK-NEXT:    [[TMP6:%.*]] = lshr i64 [[TMP5]], 57
 ; CHECK-NEXT:    [[TMP7:%.*]] = trunc i64 [[TMP6]] to i8
-; CHECK-NEXT:    [[TMP8:%.*]] = shl i64 [[TMP5]], 8
-; CHECK-NEXT:    [[TMP9:%.*]] = ashr i64 [[TMP8]], 8
+; CHECK-NEXT:    [[TMP8:%.*]] = shl i64 [[TMP5]], 7
+; CHECK-NEXT:    [[TMP9:%.*]] = ashr i64 [[TMP8]], 7
 ; CHECK-NEXT:    [[TMP10:%.*]] = ashr i64 [[TMP9]], 4
 ; CHECK-NEXT:    [[TMP11:%.*]] = getelementptr i8, ptr [[TMP4]], i64 [[TMP10]]
 ; CHECK-NEXT:    [[TMP12:%.*]] = load i8, ptr [[TMP11]], align 1
@@ -1640,8 +1640,8 @@ define void @test_store64(ptr %a, i64 %b) sanitize_hwaddress {
 ; NOFASTPATH-SAME: (ptr [[A:%.*]], i64 [[B:%.*]]) #[[ATTR0]] {
 ; NOFASTPATH-NEXT:  entry:
 ; NOFASTPATH-NEXT:    [[TMP0:%.*]] = load i64, ptr @__hwasan_tls, align 8
-; NOFASTPATH-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 8
-; NOFASTPATH-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 8
+; NOFASTPATH-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 7
+; NOFASTPATH-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 7
 ; NOFASTPATH-NEXT:    [[TMP3:%.*]] = or i64 [[TMP2]], 4294967295
 ; NOFASTPATH-NEXT:    [[HWASAN_SHADOW:%.*]] = add i64 [[TMP3]], 1
 ; NOFASTPATH-NEXT:    [[TMP4:%.*]] = inttoptr i64 [[HWASAN_SHADOW]] to ptr
@@ -1653,16 +1653,16 @@ define void @test_store64(ptr %a, i64 %b) sanitize_hwaddress {
 ; FASTPATH-SAME: (ptr [[A:%.*]], i64 [[B:%.*]]) #[[ATTR0]] {
 ; FASTPATH-NEXT:  entry:
 ; FASTPATH-NEXT:    [[TMP0:%.*]] = load i64, ptr @__hwasan_tls, align 8
-; FASTPATH-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 8
-; FASTPATH-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 8
+; FASTPATH-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 7
+; FASTPATH-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 7
 ; FASTPATH-NEXT:    [[TMP3:%.*]] = or i64 [[TMP2]], 4294967295
 ; FASTPATH-NEXT:    [[HWASAN_SHADOW:%.*]] = add i64 [[TMP3]], 1
 ; FASTPATH-NEXT:    [[TMP4:%.*]] = inttoptr i64 [[HWASAN_SHADOW]] to ptr
 ; FASTPATH-NEXT:    [[TMP5:%.*]] = ptrtoint ptr [[A]] to i64
-; FASTPATH-NEXT:    [[TMP6:%.*]] = lshr i64 [[TMP5]], 56
+; FASTPATH-NEXT:    [[TMP6:%.*]] = lshr i64 [[TMP5]], 57
 ; FASTPATH-NEXT:    [[TMP7:%.*]] = trunc i64 [[TMP6]] to i8
-; FASTPATH-NEXT:    [[TMP8:%.*]] = shl i64 [[TMP5]], 8
-; FASTPATH-NEXT:    [[TMP9:%.*]] = ashr i64 [[TMP8]], 8
+; FASTPATH-NEXT:    [[TMP8:%.*]] = shl i64 [[TMP5]], 7
+; FASTPATH-NEXT:    [[TMP9:%.*]] = ashr i64 [[TMP8]], 7
 ; FASTPATH-NEXT:    [[TMP10:%.*]] = ashr i64 [[TMP9]], 4
 ; FASTPATH-NEXT:    [[TMP11:%.*]] = getelementptr i8, ptr [[TMP4]], i64 [[TMP10]]
 ; FASTPATH-NEXT:    [[TMP12:%.*]] = load i8, ptr [[TMP11]], align 1
@@ -1680,10 +1680,10 @@ define void @test_store64(ptr %a, i64 %b) sanitize_hwaddress {
 ; ABORT-DYNAMIC-SHADOW-NEXT:  entry:
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[DOTHWASAN_SHADOW:%.*]] = call ptr asm "", "=r,0"(ptr @__hwasan_shadow)
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP0:%.*]] = ptrtoint ptr [[A]] to i64
-; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 56
+; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 57
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP2:%.*]] = trunc i64 [[TMP1]] to i8
-; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 8
-; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 8
+; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 7
+; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 7
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP5:%.*]] = ashr i64 [[TMP4]], 4
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP6:%.*]] = getelementptr i8, ptr [[DOTHWASAN_SHADOW]], i64 [[TMP5]]
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP7:%.*]] = load i8, ptr [[TMP6]], align 1
@@ -1701,10 +1701,10 @@ define void @test_store64(ptr %a, i64 %b) sanitize_hwaddress {
 ; RECOVER-DYNAMIC-SHADOW-NEXT:  entry:
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[DOTHWASAN_SHADOW:%.*]] = call ptr asm "", "=r,0"(ptr @__hwasan_shadow)
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP0:%.*]] = ptrtoint ptr [[A]] to i64
-; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 56
+; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 57
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP2:%.*]] = trunc i64 [[TMP1]] to i8
-; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 8
-; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 8
+; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 7
+; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 7
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP5:%.*]] = ashr i64 [[TMP4]], 4
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP6:%.*]] = getelementptr i8, ptr [[DOTHWASAN_SHADOW]], i64 [[TMP5]]
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP7:%.*]] = load i8, ptr [[TMP6]], align 1
@@ -1739,10 +1739,10 @@ define void @test_store64(ptr %a, i64 %b) sanitize_hwaddress {
 ; ABORT-ZERO-BASED-SHADOW-NEXT:  entry:
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[DOTHWASAN_SHADOW:%.*]] = call ptr asm "", "=r,0"(ptr null)
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP0:%.*]] = ptrtoint ptr [[A]] to i64
-; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 56
+; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 57
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP2:%.*]] = trunc i64 [[TMP1]] to i8
-; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 8
-; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 8
+; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 7
+; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 7
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP5:%.*]] = ashr i64 [[TMP4]], 4
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP6:%.*]] = inttoptr i64 [[TMP5]] to ptr
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP7:%.*]] = load i8, ptr [[TMP6]], align 1
@@ -1760,10 +1760,10 @@ define void @test_store64(ptr %a, i64 %b) sanitize_hwaddress {
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:  entry:
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[DOTHWASAN_SHADOW:%.*]] = call ptr asm "", "=r,0"(ptr null)
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP0:%.*]] = ptrtoint ptr [[A]] to i64
-; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 56
+; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 57
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP2:%.*]] = trunc i64 [[TMP1]] to i8
-; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 8
-; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 8
+; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 7
+; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 7
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP5:%.*]] = ashr i64 [[TMP4]], 4
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP6:%.*]] = inttoptr i64 [[TMP5]] to ptr
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP7:%.*]] = load i8, ptr [[TMP6]], align 1
@@ -1803,16 +1803,16 @@ define void @test_store128(ptr %a, i128 %b) sanitize_hwaddress {
 ; CHECK-SAME: (ptr [[A:%.*]], i128 [[B:%.*]]) #[[ATTR0]] {
 ; CHECK-NEXT:  entry:
 ; CHECK-NEXT:    [[TMP0:%.*]] = load i64, ptr @__hwasan_tls, align 8
-; CHECK-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 8
-; CHECK-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 8
+; CHECK-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 7
+; CHECK-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 7
 ; CHECK-NEXT:    [[TMP3:%.*]] = or i64 [[TMP2]], 4294967295
 ; CHECK-NEXT:    [[HWASAN_SHADOW:%.*]] = add i64 [[TMP3]], 1
 ; CHECK-NEXT:    [[TMP4:%.*]] = inttoptr i64 [[HWASAN_SHADOW]] to ptr
 ; CHECK-NEXT:    [[TMP5:%.*]] = ptrtoint ptr [[A]] to i64
-; CHECK-NEXT:    [[TMP6:%.*]] = lshr i64 [[TMP5]], 56
+; CHECK-NEXT:    [[TMP6:%.*]] = lshr i64 [[TMP5]], 57
 ; CHECK-NEXT:    [[TMP7:%.*]] = trunc i64 [[TMP6]] to i8
-; CHECK-NEXT:    [[TMP8:%.*]] = shl i64 [[TMP5]], 8
-; CHECK-NEXT:    [[TMP9:%.*]] = ashr i64 [[TMP8]], 8
+; CHECK-NEXT:    [[TMP8:%.*]] = shl i64 [[TMP5]], 7
+; CHECK-NEXT:    [[TMP9:%.*]] = ashr i64 [[TMP8]], 7
 ; CHECK-NEXT:    [[TMP10:%.*]] = ashr i64 [[TMP9]], 4
 ; CHECK-NEXT:    [[TMP11:%.*]] = getelementptr i8, ptr [[TMP4]], i64 [[TMP10]]
 ; CHECK-NEXT:    [[TMP12:%.*]] = load i8, ptr [[TMP11]], align 1
@@ -1829,8 +1829,8 @@ define void @test_store128(ptr %a, i128 %b) sanitize_hwaddress {
 ; NOFASTPATH-SAME: (ptr [[A:%.*]], i128 [[B:%.*]]) #[[ATTR0]] {
 ; NOFASTPATH-NEXT:  entry:
 ; NOFASTPATH-NEXT:    [[TMP0:%.*]] = load i64, ptr @__hwasan_tls, align 8
-; NOFASTPATH-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 8
-; NOFASTPATH-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 8
+; NOFASTPATH-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 7
+; NOFASTPATH-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 7
 ; NOFASTPATH-NEXT:    [[TMP3:%.*]] = or i64 [[TMP2]], 4294967295
 ; NOFASTPATH-NEXT:    [[HWASAN_SHADOW:%.*]] = add i64 [[TMP3]], 1
 ; NOFASTPATH-NEXT:    [[TMP4:%.*]] = inttoptr i64 [[HWASAN_SHADOW]] to ptr
@@ -1842,16 +1842,16 @@ define void @test_store128(ptr %a, i128 %b) sanitize_hwaddress {
 ; FASTPATH-SAME: (ptr [[A:%.*]], i128 [[B:%.*]]) #[[ATTR0]] {
 ; FASTPATH-NEXT:  entry:
 ; FASTPATH-NEXT:    [[TMP0:%.*]] = load i64, ptr @__hwasan_tls, align 8
-; FASTPATH-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 8
-; FASTPATH-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 8
+; FASTPATH-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 7
+; FASTPATH-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 7
 ; FASTPATH-NEXT:    [[TMP3:%.*]] = or i64 [[TMP2]], 4294967295
 ; FASTPATH-NEXT:    [[HWASAN_SHADOW:%.*]] = add i64 [[TMP3]], 1
 ; FASTPATH-NEXT:    [[TMP4:%.*]] = inttoptr i64 [[HWASAN_SHADOW]] to ptr
 ; FASTPATH-NEXT:    [[TMP5:%.*]] = ptrtoint ptr [[A]] to i64
-; FASTPATH-NEXT:    [[TMP6:%.*]] = lshr i64 [[TMP5]], 56
+; FASTPATH-NEXT:    [[TMP6:%.*]] = lshr i64 [[TMP5]], 57
 ; FASTPATH-NEXT:    [[TMP7:%.*]] = trunc i64 [[TMP6]] to i8
-; FASTPATH-NEXT:    [[TMP8:%.*]] = shl i64 [[TMP5]], 8
-; FASTPATH-NEXT:    [[TMP9:%.*]] = ashr i64 [[TMP8]], 8
+; FASTPATH-NEXT:    [[TMP8:%.*]] = shl i64 [[TMP5]], 7
+; FASTPATH-NEXT:    [[TMP9:%.*]] = ashr i64 [[TMP8]], 7
 ; FASTPATH-NEXT:    [[TMP10:%.*]] = ashr i64 [[TMP9]], 4
 ; FASTPATH-NEXT:    [[TMP11:%.*]] = getelementptr i8, ptr [[TMP4]], i64 [[TMP10]]
 ; FASTPATH-NEXT:    [[TMP12:%.*]] = load i8, ptr [[TMP11]], align 1
@@ -1869,10 +1869,10 @@ define void @test_store128(ptr %a, i128 %b) sanitize_hwaddress {
 ; ABORT-DYNAMIC-SHADOW-NEXT:  entry:
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[DOTHWASAN_SHADOW:%.*]] = call ptr asm "", "=r,0"(ptr @__hwasan_shadow)
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP0:%.*]] = ptrtoint ptr [[A]] to i64
-; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 56
+; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 57
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP2:%.*]] = trunc i64 [[TMP1]] to i8
-; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 8
-; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 8
+; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 7
+; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 7
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP5:%.*]] = ashr i64 [[TMP4]], 4
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP6:%.*]] = getelementptr i8, ptr [[DOTHWASAN_SHADOW]], i64 [[TMP5]]
 ; ABORT-DYNAMIC-SHADOW-NEXT:    [[TMP7:%.*]] = load i8, ptr [[TMP6]], align 1
@@ -1890,10 +1890,10 @@ define void @test_store128(ptr %a, i128 %b) sanitize_hwaddress {
 ; RECOVER-DYNAMIC-SHADOW-NEXT:  entry:
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[DOTHWASAN_SHADOW:%.*]] = call ptr asm "", "=r,0"(ptr @__hwasan_shadow)
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP0:%.*]] = ptrtoint ptr [[A]] to i64
-; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 56
+; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 57
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP2:%.*]] = trunc i64 [[TMP1]] to i8
-; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 8
-; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 8
+; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 7
+; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 7
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP5:%.*]] = ashr i64 [[TMP4]], 4
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP6:%.*]] = getelementptr i8, ptr [[DOTHWASAN_SHADOW]], i64 [[TMP5]]
 ; RECOVER-DYNAMIC-SHADOW-NEXT:    [[TMP7:%.*]] = load i8, ptr [[TMP6]], align 1
@@ -1928,10 +1928,10 @@ define void @test_store128(ptr %a, i128 %b) sanitize_hwaddress {
 ; ABORT-ZERO-BASED-SHADOW-NEXT:  entry:
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[DOTHWASAN_SHADOW:%.*]] = call ptr asm "", "=r,0"(ptr null)
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP0:%.*]] = ptrtoint ptr [[A]] to i64
-; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 56
+; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 57
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP2:%.*]] = trunc i64 [[TMP1]] to i8
-; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 8
-; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 8
+; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 7
+; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 7
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP5:%.*]] = ashr i64 [[TMP4]], 4
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP6:%.*]] = inttoptr i64 [[TMP5]] to ptr
 ; ABORT-ZERO-BASED-SHADOW-NEXT:    [[TMP7:%.*]] = load i8, ptr [[TMP6]], align 1
@@ -1949,10 +1949,10 @@ define void @test_store128(ptr %a, i128 %b) sanitize_hwaddress {
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:  entry:
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[DOTHWASAN_SHADOW:%.*]] = call ptr asm "", "=r,0"(ptr null)
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP0:%.*]] = ptrtoint ptr [[A]] to i64
-; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 56
+; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 57
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP2:%.*]] = trunc i64 [[TMP1]] to i8
-; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 8
-; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 8
+; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP3:%.*]] = shl i64 [[TMP0]], 7
+; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP4:%.*]] = ashr i64 [[TMP3]], 7
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP5:%.*]] = ashr i64 [[TMP4]], 4
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP6:%.*]] = inttoptr i64 [[TMP5]] to ptr
 ; RECOVER-ZERO-BASED-SHADOW-NEXT:    [[TMP7:%.*]] = load i8, ptr [[TMP6]], align 1
@@ -1992,8 +1992,8 @@ define void @test_store40(ptr %a, i40 %b) sanitize_hwaddress {
 ; CHECK-SAME: (ptr [[A:%.*]], i40 [[B:%.*]]) #[[ATTR0]] {
 ; CHECK-NEXT:  entry:
 ; CHECK-NEXT:    [[TMP0:%.*]] = load i64, ptr @__hwasan_tls, align 8
-; CHECK-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 8
-; CHECK-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 8
+; CHECK-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 7
+; CHECK-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 7
 ; CHECK-NEXT:    [[TMP3:%.*]] = or i64 [[TMP2]], 4294967295
 ; CHECK-NEXT:    [[HWASAN_SHADOW:%.*]] = add i64 [[TMP3]], 1
 ; CHECK-NEXT:    [[TMP4:%.*]] = inttoptr i64 [[HWASAN_SHADOW]] to ptr
@@ -2006,8 +2006,8 @@ define void @test_store40(ptr %a, i40 %b) sanitize_hwaddress {
 ; NOFASTPATH-SAME: (ptr [[A:%.*]], i40 [[B:%.*]]) #[[ATTR0]] {
 ; NOFASTPATH-NEXT:  entry:
 ; NOFASTPATH-NEXT:    [[TMP0:%.*]] = load i64, ptr @__hwasan_tls, align 8
-; NOFASTPATH-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 8
-; NOFASTPATH-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 8
+; NOFASTPATH-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 7
+; NOFASTPATH-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 7
 ; NOFASTPATH-NEXT:    [[TMP3:%.*]] = or i64 [[TMP2]], 4294967295
 ; NOFASTPATH-NEXT:    [[HWASAN_SHADOW:%.*]] = add i64 [[TMP3]], 1
 ; NOFASTPATH-NEXT:    [[TMP4:%.*]] = inttoptr i64 [[HWASAN_SHADOW]] to ptr
@@ -2020,8 +2020,8 @@ define void @test_store40(ptr %a, i40 %b) sanitize_hwaddress {
 ; FASTPATH-SAME: (ptr [[A:%.*]], i40 [[B:%.*]]) #[[ATTR0]] {
 ; FASTPATH-NEXT:  entry:
 ; FASTPATH-NEXT:    [[TMP0:%.*]] = load i64, ptr @__hwasan_tls, align 8
-; FASTPATH-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 8
-; FASTPATH-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 8
+; FASTPATH-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 7
+; FASTPATH-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 7
 ; FASTPATH-NEXT:    [[TMP3:%.*]] = or i64 [[TMP2]], 4294967295
 ; FASTPATH-NEXT:    [[HWASAN_SHADOW:%.*]] = add i64 [[TMP3]], 1
 ; FASTPATH-NEXT:    [[TMP4:%.*]] = inttoptr i64 [[HWASAN_SHADOW]] to ptr
@@ -2076,8 +2076,8 @@ define void @test_store_unaligned(ptr %a, i64 %b) sanitize_hwaddress {
 ; CHECK-SAME: (ptr [[A:%.*]], i64 [[B:%.*]]) #[[ATTR0]] {
 ; CHECK-NEXT:  entry:
 ; CHECK-NEXT:    [[TMP0:%.*]] = load i64, ptr @__hwasan_tls, align 8
-; CHECK-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 8
-; CHECK-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 8
+; CHECK-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 7
+; CHECK-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 7
 ; CHECK-NEXT:    [[TMP3:%.*]] = or i64 [[TMP2]], 4294967295
 ; CHECK-NEXT:    [[HWASAN_SHADOW:%.*]] = add i64 [[TMP3]], 1
 ; CHECK-NEXT:    [[TMP4:%.*]] = inttoptr i64 [[HWASAN_SHADOW]] to ptr
@@ -2090,8 +2090,8 @@ define void @test_store_unaligned(ptr %a, i64 %b) sanitize_hwaddress {
 ; NOFASTPATH-SAME: (ptr [[A:%.*]], i64 [[B:%.*]]) #[[ATTR0]] {
 ; NOFASTPATH-NEXT:  entry:
 ; NOFASTPATH-NEXT:    [[TMP0:%.*]] = load i64, ptr @__hwasan_tls, align 8
-; NOFASTPATH-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 8
-; NOFASTPATH-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 8
+; NOFASTPATH-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 7
+; NOFASTPATH-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 7
 ; NOFASTPATH-NEXT:    [[TMP3:%.*]] = or i64 [[TMP2]], 4294967295
 ; NOFASTPATH-NEXT:    [[HWASAN_SHADOW:%.*]] = add i64 [[TMP3]], 1
 ; NOFASTPATH-NEXT:    [[TMP4:%.*]] = inttoptr i64 [[HWASAN_SHADOW]] to ptr
@@ -2104,8 +2104,8 @@ define void @test_store_unaligned(ptr %a, i64 %b) sanitize_hwaddress {
 ; FASTPATH-SAME: (ptr [[A:%.*]], i64 [[B:%.*]]) #[[ATTR0]] {
 ; FASTPATH-NEXT:  entry:
 ; FASTPATH-NEXT:    [[TMP0:%.*]] = load i64, ptr @__hwasan_tls, align 8
-; FASTPATH-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 8
-; FASTPATH-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 8
+; FASTPATH-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 7
+; FASTPATH-NEXT:    [[TMP2:%.*]] = ashr i64 [[TMP1]], 7
 ; FASTPATH-NEXT:    [[TMP3:%.*]] = or i64 [[TMP2]], 4294967295
 ; FASTPATH-NEXT:    [[HWASAN_SHADOW:%.*]] = add i64 [[TMP3]], 1
 ; FASTPATH-NEXT:    [[TMP4:%.*]] = inttoptr i64 [[HWASAN_SHADOW]] to ptr

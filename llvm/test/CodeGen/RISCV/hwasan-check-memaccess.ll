@@ -67,11 +67,11 @@ declare void @llvm.hwasan.check.memaccess(ptr, ptr, i32)
 ; CHECK-NEXT: .weak   __hwasan_check_x10_1
 ; CHECK-NEXT: .hidden __hwasan_check_x10_1
 ; CHECK-NEXT: __hwasan_check_x10_1:
-; CHECK-NEXT: slli    t1, a0, 8
-; CHECK-NEXT: srli    t1, t1, 12
+; CHECK-NEXT: slli    t1, a0, 7
+; CHECK-NEXT: srli    t1, t1, 11
 ; CHECK-NEXT: add     t1, t0, t1
 ; CHECK-NEXT: lbu     t1, 0(t1)
-; CHECK-NEXT: srli    t2, a0, 56
+; CHECK-NEXT: srli    t2, a0, 57
 ; CHECK-NEXT: bne     t2, t1, .Ltmp0
 ; CHECK-NEXT: .Ltmp1:
 ; CHECK-NEXT: ret
@@ -82,18 +82,18 @@ declare void @llvm.hwasan.check.memaccess(ptr, ptr, i32)
 ; CHECK-NEXT: sd      s0, 64(sp)
 ; CHECK-NEXT: sd      ra, 8(sp)
 ; CHECK-NEXT: li      a1, 1
-; CHECK-NEXT: call    __hwasan_tag_mismatch_v2
+; CHECK-NEXT: call    __hwasan_tag_mismatch
 
 ; COMPRESS: .section        .text.hot,"axG",@progbits,__hwasan_check_x10_1,comdat
 ; COMPRESS-NEXT: .type   __hwasan_check_x10_1,@function
 ; COMPRESS-NEXT: .weak   __hwasan_check_x10_1
 ; COMPRESS-NEXT: .hidden __hwasan_check_x10_1
 ; COMPRESS-NEXT: __hwasan_check_x10_1:
-; COMPRESS-NEXT: slli    t1, a0, 8
-; COMPRESS-NEXT: srli    t1, t1, 12
+; COMPRESS-NEXT: slli    t1, a0, 7
+; COMPRESS-NEXT: srli    t1, t1, 11
 ; COMPRESS-NEXT: c.add   t1, t0
 ; COMPRESS-NEXT: lbu     t1, 0(t1)
-; COMPRESS-NEXT: srli    t2, a0, 56
+; COMPRESS-NEXT: srli    t2, a0, 57
 ; COMPRESS-NEXT: bne     t2, t1, .Ltmp0
 ; COMPRESS-NEXT: .Ltmp1:
 ; COMPRESS-NEXT: c.jr    ra
@@ -104,7 +104,7 @@ declare void @llvm.hwasan.check.memaccess(ptr, ptr, i32)
 ; COMPRESS-NEXT: c.sdsp s0, 64(sp)
 ; COMPRESS-NEXT: c.sdsp ra, 8(sp)
 ; COMPRESS-NEXT: c.li    a1, 1
-; COMPRESS-NEXT: call    __hwasan_tag_mismatch_v2
+; COMPRESS-NEXT: call    __hwasan_tag_mismatch
 
 declare void @llvm.hwasan.check.memaccess.shortgranules(ptr, ptr, i32)
 
@@ -113,11 +113,11 @@ declare void @llvm.hwasan.check.memaccess.shortgranules(ptr, ptr, i32)
 ; CHECK-NEXT: .weak   __hwasan_check_x10_2_short
 ; CHECK-NEXT: .hidden __hwasan_check_x10_2_short
 ; CHECK-NEXT: __hwasan_check_x10_2_short:
-; CHECK-NEXT: slli    t1, a0, 8
-; CHECK-NEXT: srli    t1, t1, 12
+; CHECK-NEXT: slli    t1, a0, 7
+; CHECK-NEXT: srli    t1, t1, 11
 ; CHECK-NEXT: add     t1, t0, t1
 ; CHECK-NEXT: lbu     t1, 0(t1)
-; CHECK-NEXT: srli    t2, a0, 56
+; CHECK-NEXT: srli    t2, a0, 57
 ; CHECK-NEXT: bne     t2, t1, .Ltmp2
 ; CHECK-NEXT: .Ltmp3:
 ; CHECK-NEXT: ret
@@ -137,18 +137,18 @@ declare void @llvm.hwasan.check.memaccess.shortgranules(ptr, ptr, i32)
 ; CHECK-NEXT: sd      s0, 64(sp)
 ; CHECK-NEXT: sd      ra, 8(sp)
 ; CHECK-NEXT: li      a1, 2
-; CHECK-NEXT: call    __hwasan_tag_mismatch_v2
+; CHECK-NEXT: call    __hwasan_tag_mismatch
 
 ; COMPRESS: .section        .text.hot,"axG",@progbits,__hwasan_check_x10_2_short,comdat
 ; COMPRESS-NEXT: .type   __hwasan_check_x10_2_short,@function
 ; COMPRESS-NEXT: .weak   __hwasan_check_x10_2_short
 ; COMPRESS-NEXT: .hidden __hwasan_check_x10_2_short
 ; COMPRESS-NEXT: __hwasan_check_x10_2_short:
-; COMPRESS-NEXT: slli    t1, a0, 8
-; COMPRESS-NEXT: srli    t1, t1, 12
+; COMPRESS-NEXT: slli    t1, a0, 7
+; COMPRESS-NEXT: srli    t1, t1, 11
 ; COMPRESS-NEXT: c.add   t1, t0
 ; COMPRESS-NEXT: lbu     t1, 0(t1)
-; COMPRESS-NEXT: srli    t2, a0, 56
+; COMPRESS-NEXT: srli    t2, a0, 57
 ; COMPRESS-NEXT: bne     t2, t1, .Ltmp2
 ; COMPRESS-NEXT: .Ltmp3:
 ; COMPRESS-NEXT: c.jr    ra
@@ -168,4 +168,4 @@ declare void @llvm.hwasan.check.memaccess.shortgranules(ptr, ptr, i32)
 ; COMPRESS-NEXT: c.sdsp s0, 64(sp)
 ; COMPRESS-NEXT: c.sdsp ra, 8(sp)
 ; COMPRESS-NEXT: c.li    a1, 2
-; COMPRESS-NEXT: call    __hwasan_tag_mismatch_v2
+; COMPRESS-NEXT: call    __hwasan_tag_mismatch

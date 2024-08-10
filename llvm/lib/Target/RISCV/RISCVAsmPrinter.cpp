@@ -641,7 +641,7 @@ void RISCVAsmPrinter::EmitHwasanMemaccessSymbols(Module &M) {
   const MCSubtargetInfo &MCSTI = *TM.getMCSubtargetInfo();
 
   MCSymbol *HwasanTagMismatchV2Sym =
-      OutContext.getOrCreateSymbol("__hwasan_tag_mismatch_v2");
+      OutContext.getOrCreateSymbol("__hwasan_tag_mismatch");
   // Annotate symbol as one having incompatible calling convention, so
   // run-time linkers can instead eagerly bind this function.
   auto &RTS =
@@ -678,13 +678,13 @@ void RISCVAsmPrinter::EmitHwasanMemaccessSymbols(Module &M) {
     // Extract shadow offset from ptr
     EmitToStreamer(
         *OutStreamer,
-        MCInstBuilder(RISCV::SLLI).addReg(RISCV::X6).addReg(Reg).addImm(8),
+        MCInstBuilder(RISCV::SLLI).addReg(RISCV::X6).addReg(Reg).addImm(7),
         MCSTI);
     EmitToStreamer(*OutStreamer,
                    MCInstBuilder(RISCV::SRLI)
                        .addReg(RISCV::X6)
                        .addReg(RISCV::X6)
-                       .addImm(12),
+                       .addImm(11),
                    MCSTI);
     // load shadow tag in X6, X5 contains shadow base
     EmitToStreamer(*OutStreamer,
@@ -700,7 +700,7 @@ void RISCVAsmPrinter::EmitHwasanMemaccessSymbols(Module &M) {
     // Extract tag from pointer and compare it with loaded tag from shadow
     EmitToStreamer(
         *OutStreamer,
-        MCInstBuilder(RISCV::SRLI).addReg(RISCV::X7).addReg(Reg).addImm(56),
+        MCInstBuilder(RISCV::SRLI).addReg(RISCV::X7).addReg(Reg).addImm(57),
         MCSTI);
     MCSymbol *HandleMismatchOrPartialSym = OutContext.createTempSymbol();
     // X7 contains tag from the pointer, while X6 contains tag from memory

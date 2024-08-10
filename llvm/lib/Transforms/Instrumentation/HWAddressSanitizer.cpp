@@ -667,6 +667,7 @@ void HWAddressSanitizer::initializeModule() {
   for (Function &F : M.functions())
     removeFnAttributes(&F);
 
+  bool IsRISCV64 = TargetTriple.isRISCV64();
   // x86_64 currently has two modes:
   // - Intel LAM (default)
   // - pointer aliasing (heap only)
@@ -675,8 +676,8 @@ void HWAddressSanitizer::initializeModule() {
   InstrumentWithCalls = shouldInstrumentWithCalls(TargetTriple);
   InstrumentStack = shouldInstrumentStack(TargetTriple);
   DetectUseAfterScope = shouldDetectUseAfterScope(TargetTriple);
-  PointerTagShift = IsX86_64 ? 57 : 56;
-  TagMaskByte = IsX86_64 ? 0x3F : 0xFF;
+  PointerTagShift = IsRISCV64 || IsX86_64 ? 57 : 56;
+  TagMaskByte = IsX86_64 ? 0x3F : IsRISCV64 ? 0x7F : 0xFF;
 
   Mapping.init(TargetTriple, InstrumentWithCalls);
 
@@ -705,7 +706,7 @@ void HWAddressSanitizer::initializeModule() {
       MatchAllTag = ClMatchAllTag & 0xFF;
     }
   } else if (CompileKernel) {
-    MatchAllTag = 0xFF;
+    MatchAllTag = TagMaskByte;
   }
   UseMatchAllCallback = !CompileKernel && MatchAllTag.has_value();
 
@@ -1242,7 +1243,7 @@ void HWAddressSanitizer::tagAlloca(IRBuilder<> &IRB, AllocaInst *AI, Value *Tag,
 }
 
 unsigned HWAddressSanitizer::retagMask(unsigned AllocaNo) {
-  if (TargetTriple.getArch() == Triple::x86_64)
+  if (TagMaskByte != 0xFF)
     return AllocaNo & TagMaskByte;
 
   // A list of 8-bit numbers that have at most one run of non-zero bits.
